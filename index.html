@@ -64,8 +64,6 @@ body {
 body.cursor-hover .cursor { width:16px; height:16px; }
 body.cursor-hover .cursor-ring { width:52px; height:52px; opacity:0.6; }
 
-
-  
 /* ─── NAV ─── */
 nav {
   position: fixed; top:0; left:0; right:0; z-index:100;
@@ -221,18 +219,60 @@ section { padding:8rem 4rem; }
 
 /* ─── ABOUT ─── */
 #about { background:var(--bg2); }
-.about-grid { display:grid; grid-template-columns:1fr 1fr; gap:7rem; align-items:start; }
+
+/* Top row: text left, photo right */
+.about-top { display:grid; grid-template-columns:1fr 1fr; gap:6rem; align-items:start; margin-bottom:5rem; }
+
 .about-left h2 { font-family:var(--serif); font-size:clamp(2.5rem,4vw,4.5rem); font-weight:900; line-height:0.95; margin-bottom:2rem; }
 .about-left h2 em { font-style:italic; font-weight:400; color:var(--accent); display:block; }
 .about-body { color:var(--fg2); line-height:1.85; font-size:1.05rem; margin-bottom:1rem; }
-.about-stats { display:grid; grid-template-columns:1fr 1fr; gap:1px; margin-top:3rem; background:var(--border); }
-.stat { padding:1.5rem; background:var(--bg2); }
-.stat-n { font-family:var(--serif); font-size:3.5rem; font-weight:900; color:var(--accent); line-height:1; }
-.stat-l { font-family:var(--mono); font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--fg3); margin-top:0.4rem; }
-.skills-grp { margin-bottom:2.25rem; }
+.about-stats { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; margin-top:3rem; background:var(--border); }
+.stat { padding:1.25rem 1rem; background:var(--bg2); }
+.stat-n { font-family:var(--serif); font-size:2.75rem; font-weight:900; color:var(--accent); line-height:1; }
+.stat-l { font-family:var(--mono); font-size:0.65rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--fg3); margin-top:0.4rem; }
+
+/* Photo — right column */
+.about-photo-wrap {
+  position:relative;
+  width:100%;
+}
+.about-photo-frame {
+  position:relative; overflow:hidden;
+  border-radius:4px;
+  aspect-ratio: 3/4;
+  background:var(--bg3);
+}
+.about-photo-frame img {
+  width:100%; height:100%; object-fit:cover; display:block;
+  filter:saturate(0.75);
+  transition:filter 0.5s var(--ease-out), transform 0.6s var(--ease-out);
+}
+.about-photo-wrap:hover .about-photo-frame img { filter:saturate(1); transform:scale(1.03); }
+.about-photo-accent {
+  position:absolute; bottom:-12px; right:-12px;
+  width:100%; height:100%;
+  border:1px solid rgba(232,97,58,0.25);
+  border-radius:4px;
+  z-index:-1;
+  transition:transform 0.4s var(--ease-out);
+}
+.about-photo-wrap:hover .about-photo-accent { transform:translate(5px,5px); }
+.about-photo-badge {
+  position:absolute; bottom:1.25rem; left:1.25rem;
+  background:rgba(8,8,8,0.82); backdrop-filter:blur(8px);
+  border:1px solid var(--border2);
+  border-radius:4px; padding:0.6rem 0.9rem;
+}
+.about-photo-badge-name { font-family:var(--serif); font-size:1rem; font-weight:700; color:var(--fg); line-height:1.2; }
+.about-photo-badge-role { font-family:var(--mono); font-size:0.62rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--accent); margin-top:0.2rem; }
+
+/* Skills row — full width, 4 columns */
+.about-skills { border-top:1px solid var(--border); padding-top:4rem; }
+.about-skills-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:2.5rem; }
+.skills-grp { }
 .skills-grp-lbl { font-family:var(--mono); font-size:0.72rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--accent); margin-bottom:0.75rem; }
 .skills-list { display:flex; flex-wrap:wrap; gap:0.5rem; }
-.skill { font-size:0.9rem; color:var(--fg2); background:var(--bg3); border:1px solid var(--border); padding:0.45rem 1rem; border-radius:100px; transition:all 0.3s; }
+.skill { font-size:0.88rem; color:var(--fg2); background:var(--bg3); border:1px solid var(--border); padding:0.4rem 0.9rem; border-radius:100px; transition:all 0.3s; }
 .skill:hover { background:var(--accentbg); border-color:rgba(232,97,58,0.3); color:var(--accent); }
 
 /* ─── AI WORKFLOW ─── */
@@ -249,7 +289,22 @@ section { padding:8rem 4rem; }
 .w-num { font-family:var(--mono); font-size:0.7rem; color:var(--accent); letter-spacing:0.1em; margin-bottom:0.6rem; }
 .w-title { font-family:var(--serif); font-size:1.35rem; font-weight:700; margin-bottom:0.6rem; }
 .w-desc { font-size:0.9rem; color:var(--fg2); line-height:1.7; margin-bottom:0.75rem; }
-.w-tools { font-family:var(--mono); font-size:0.7rem; color:rgba(232,97,58,0.65); letter-spacing:0.07em; }
+.w-tools { display:flex; flex-wrap:wrap; gap:0.4rem; margin-top:0.25rem; }
+.w-tool-pill {
+  display:inline-flex; align-items:center; gap:0.35rem;
+  font-family:var(--mono); font-size:0.65rem; letter-spacing:0.05em;
+  color:var(--fg2); background:var(--bg2);
+  border:1px solid var(--border2);
+  padding:0.28rem 0.6rem 0.28rem 0.45rem;
+  border-radius:100px;
+  transition:all 0.3s;
+  white-space:nowrap;
+}
+.w-stage:hover .w-tool-pill { border-color:rgba(232,97,58,0.3); color:var(--fg); }
+.w-tool-icon {
+  width:14px; height:14px; border-radius:3px;
+  object-fit:contain; flex-shrink:0; display:block;
+}
 
 /* ─── EXPERIENCE ─── */
 #exp { background:var(--bg2); }
@@ -465,11 +520,13 @@ footer span { color:var(--accent); }
   .img-hover-sub { transform:none; }
 
   /* About */
-  .about-grid { grid-template-columns:1fr; gap:3rem; }
+  .about-top { grid-template-columns:1fr; gap:3rem; }
   .about-left h2 { font-size:clamp(2.2rem,8vw,3rem); }
   .about-body { font-size:1rem; }
   .about-stats { grid-template-columns:1fr 1fr; }
-  .stat-n { font-size:2.75rem; }
+  .stat-n { font-size:2.25rem; }
+  .about-skills-grid { grid-template-columns:1fr 1fr; gap:2rem; }
+  .about-photo-wrap { max-width:100%; }
 
   /* AI workflow — single col stack */
   .workflow { grid-template-columns:1fr; gap:0; }
@@ -486,7 +543,7 @@ footer span { color:var(--accent); }
   .w-num { grid-row:1; grid-column:2; align-self:center; margin-bottom:0; }
   .w-title { grid-row:2; grid-column:2; margin-top:0.5rem; font-size:1.2rem; }
   .w-desc { grid-row:3; grid-column:2; font-size:0.9rem; }
-  .w-tools { grid-row:4; grid-column:2; }
+  .w-tools { grid-row:4; grid-column:2; flex-wrap:wrap; }
   .w-stage:last-child { border-bottom:none; }
 
   /* Experience */
@@ -757,7 +814,8 @@ footer span { color:var(--accent); }
     <span class="sec-lbl">About</span>
   </div>
 
-  <div class="about-grid">
+  <div class="about-top">
+    <!-- LEFT: heading + bio + stats -->
     <div class="about-left">
       <h2 class="reveal">Designing<br>beyond<br><em>interfaces.</em></h2>
       <p class="about-body reveal rd1">I design products that simplify complexity.</p>
@@ -770,11 +828,47 @@ footer span { color:var(--accent); }
         <div class="stat"><div class="stat-n">AI</div><div class="stat-l">Native workflow</div></div>
       </div>
     </div>
-    <div class="about-right reveal rd2">
-      <div class="skills-grp"><div class="skills-grp-lbl">Design</div><div class="skills-list"><span class="skill">UX Strategy</span><span class="skill">Product Design</span><span class="skill">Design Systems</span><span class="skill">Interaction Design</span><span class="skill">Information Architecture</span><span class="skill">Prototyping</span></div></div>
-      <div class="skills-grp"><div class="skills-grp-lbl">Tools</div><div class="skills-list"><span class="skill">Figma</span><span class="skill">Figma AI</span><span class="skill">Framer</span><span class="skill">Principle</span><span class="skill">Lottie</span><span class="skill">Zeplin</span></div></div>
-      <div class="skills-grp"><div class="skills-grp-lbl">AI Stack</div><div class="skills-list"><span class="skill">Claude</span><span class="skill">ChatGPT</span><span class="skill">Gemini</span><span class="skill">Google Stitch</span><span class="skill">Midjourney</span><span class="skill">AI Prototyping</span></div></div>
-      <div class="skills-grp"><div class="skills-grp-lbl">Research</div><div class="skills-list"><span class="skill">User Interviews</span><span class="skill">Heuristic Evaluation</span><span class="skill">Usability Testing</span><span class="skill">Journey Mapping</span><span class="skill">UX Audits</span></div></div>
+
+    <!-- RIGHT: photo -->
+    <div class="about-photo-wrap reveal rd1">
+      <div class="about-photo-frame">
+        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=680&q=80&fit=crop&crop=face" alt="Selva Vignesh">
+      </div>
+      <div class="about-photo-accent"></div>
+      <div class="about-photo-badge">
+        <div class="about-photo-badge-name">Selva Vignesh</div>
+        <div class="about-photo-badge-role">Senior UX Designer</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SKILLS: full-width 4-column grid -->
+  <div class="about-skills reveal rd2">
+    <div class="about-skills-grid">
+      <div class="skills-grp">
+        <div class="skills-grp-lbl">Design</div>
+        <div class="skills-list">
+          <span class="skill">UX Strategy</span><span class="skill">Product Design</span><span class="skill">Design Systems</span><span class="skill">Interaction Design</span><span class="skill">Information Architecture</span><span class="skill">Prototyping</span>
+        </div>
+      </div>
+      <div class="skills-grp">
+        <div class="skills-grp-lbl">Tools</div>
+        <div class="skills-list">
+          <span class="skill">Figma</span><span class="skill">Figma AI</span><span class="skill">Framer</span><span class="skill">Principle</span><span class="skill">Lottie</span><span class="skill">Zeplin</span>
+        </div>
+      </div>
+      <div class="skills-grp">
+        <div class="skills-grp-lbl">AI Stack</div>
+        <div class="skills-list">
+          <span class="skill">Claude</span><span class="skill">ChatGPT</span><span class="skill">Gemini</span><span class="skill">Google Stitch</span><span class="skill">Midjourney</span><span class="skill">AI Prototyping</span>
+        </div>
+      </div>
+      <div class="skills-grp">
+        <div class="skills-grp-lbl">Research</div>
+        <div class="skills-list">
+          <span class="skill">User Interviews</span><span class="skill">Heuristic Evaluation</span><span class="skill">Usability Testing</span><span class="skill">Journey Mapping</span><span class="skill">UX Audits</span>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -791,11 +885,79 @@ footer span { color:var(--accent); }
     <p class="reveal rd1">AI has become central to my product workflow — accelerating research, ideation, structure, and execution while keeping human-centered decision making at the core.</p>
   </div>
   <div class="workflow">
-    <div class="w-stage reveal"><div class="w-dot"><div class="w-dot-inner"></div></div><div class="w-num">01</div><div class="w-title">Research</div><div class="w-desc">Accelerating competitor analysis, heuristic reviews, UX audits, and idea expansion.</div><div class="w-tools">ChatGPT · Gemini</div></div>
-    <div class="w-stage reveal rd1"><div class="w-dot"><div class="w-dot-inner"></div></div><div class="w-num">02</div><div class="w-title">Structure</div><div class="w-desc">Generating user flows, content structures, journey mapping, and UX writing frameworks.</div><div class="w-tools">Claude · ChatGPT</div></div>
-    <div class="w-stage reveal rd2"><div class="w-dot"><div class="w-dot-inner"></div></div><div class="w-num">03</div><div class="w-title">Exploration</div><div class="w-desc">Rapid interface generation, layout exploration, and scalable UI experimentation.</div><div class="w-tools">Figma AI · Google Stitch</div></div>
-    <div class="w-stage reveal rd3"><div class="w-dot"><div class="w-dot-inner"></div></div><div class="w-num">04</div><div class="w-title">Validation</div><div class="w-desc">Refining usability, accessibility, edge cases, and interaction consistency.</div><div class="w-tools">AI-assisted iteration</div></div>
-    <div class="w-stage reveal rd4"><div class="w-dot"><div class="w-dot-inner"></div></div><div class="w-num">05</div><div class="w-title">Delivery</div><div class="w-desc">Supporting frontend prototyping, collaboration, and faster developer handoff.</div><div class="w-tools">Claude · AI coding</div></div>
+
+    <!-- 01 Research -->
+    <div class="w-stage reveal">
+      <div class="w-dot"><div class="w-dot-inner"></div></div>
+      <div class="w-num">01</div>
+      <div class="w-title">Research</div>
+      <div class="w-desc">Accelerating competitor analysis, heuristic reviews, UX audits, and idea expansion.</div>
+      <div class="w-tools">
+        <span class="w-tool-pill"><img class="w-tool-icon" src="https://www.google.com/s2/favicons?domain=chat.openai.com&sz=32" alt="">ChatGPT</span>
+        <span class="w-tool-pill"><img class="w-tool-icon" src="https://www.google.com/s2/favicons?domain=gemini.google.com&sz=32" alt="">Gemini</span>
+        <span class="w-tool-pill"><img class="w-tool-icon" src="https://www.google.com/s2/favicons?domain=miro.com&sz=32" alt="">Miro</span>
+        <span class="w-tool-pill"><img class="w-tool-icon" src="https://www.google.com/s2/favicons?domain=notion.so&sz=32" alt="">Notion</span>
+      </div>
+    </div>
+
+    <!-- 02 Structure -->
+    <div class="w-stage reveal rd1">
+      <div class="w-dot"><div class="w-dot-inner"></div></div>
+      <div class="w-num">02</div>
+      <div class="w-title">Structure</div>
+      <div class="w-desc">Generating user flows, content structures, journey mapping, and UX writing frameworks.</div>
+      <div class="w-tools">
+        <span class="w-tool-pill"><img class="w-tool-icon" src="https://www.google.com/s2/favicons?domain=claude.ai&sz=32" alt="">Claude</span>
+        <span class="w-tool-pill"><img class="w-tool-icon" src="https://www.google.com/s2/favicons?domain=miro.com&sz=32" alt="">Miro</span>
+        <span class="w-tool-pill"><img class="w-tool-icon" src="https://www.google.com/s2/favicons?domain=notion.so&sz=32" alt="">Notion</span>
+        <span class="w-tool-pill"><img class="w-tool-icon" src="https://www.google.com/s2/favicons?domain=monday.com&sz=32" alt="">Monday</span>
+      </div>
+    </div>
+
+    <!-- 03 Exploration -->
+    <div class="w-stage reveal rd2">
+      <div class="w-dot"><div class="w-dot-inner"></div></div>
+      <div class="w-num">03</div>
+      <div class="w-title">Exploration</div>
+      <div class="w-desc">Rapid interface generation, layout exploration, and scalable UI experimentation.</div>
+      <div class="w-tools">
+        <span class="w-tool-pill"><img class="w-tool-icon" src="https://www.google.com/s2/favicons?domain=figma.com&sz=32" alt="">Figma</span>
+        <span class="w-tool-pill"><img class="w-tool-icon" src="https://www.google.com/s2/favicons?domain=figma.com&sz=32" alt="">Figma AI</span>
+        <span class="w-tool-pill"><img class="w-tool-icon" src="https://www.google.com/s2/favicons?domain=stitch.withgoogle.com&sz=32" alt="">Stitch</span>
+        <span class="w-tool-pill"><img class="w-tool-icon" src="https://www.google.com/s2/favicons?domain=lovable.dev&sz=32" alt="">Lovable</span>
+        <span class="w-tool-pill"><img class="w-tool-icon" src="https://www.google.com/s2/favicons?domain=uizard.io&sz=32" alt="">Uizard</span>
+      </div>
+    </div>
+
+    <!-- 04 Validation -->
+    <div class="w-stage reveal rd3">
+      <div class="w-dot"><div class="w-dot-inner"></div></div>
+      <div class="w-num">04</div>
+      <div class="w-title">Validation</div>
+      <div class="w-desc">Refining usability, accessibility, edge cases, and interaction consistency.</div>
+      <div class="w-tools">
+        <span class="w-tool-pill"><img class="w-tool-icon" src="https://www.google.com/s2/favicons?domain=claude.ai&sz=32" alt="">Claude</span>
+        <span class="w-tool-pill"><img class="w-tool-icon" src="https://www.google.com/s2/favicons?domain=chat.openai.com&sz=32" alt="">ChatGPT</span>
+        <span class="w-tool-pill"><img class="w-tool-icon" src="https://www.google.com/s2/favicons?domain=figma.com&sz=32" alt="">Figma</span>
+      </div>
+    </div>
+
+    <!-- 05 Delivery -->
+    <div class="w-stage reveal rd4">
+      <div class="w-dot"><div class="w-dot-inner"></div></div>
+      <div class="w-num">05</div>
+      <div class="w-title">Delivery</div>
+      <div class="w-desc">Supporting frontend prototyping, collaboration, and faster developer handoff.</div>
+      <div class="w-tools">
+        <span class="w-tool-pill"><img class="w-tool-icon" src="https://www.google.com/s2/favicons?domain=code.visualstudio.com&sz=32" alt="">VS Code</span>
+        <span class="w-tool-pill"><img class="w-tool-icon" src="https://www.google.com/s2/favicons?domain=github.com&sz=32" alt="">GitHub</span>
+        <span class="w-tool-pill"><img class="w-tool-icon" src="https://www.google.com/s2/favicons?domain=azure.microsoft.com&sz=32" alt="">Azure</span>
+        <span class="w-tool-pill"><img class="w-tool-icon" src="https://www.google.com/s2/favicons?domain=github.com/features/copilot&sz=32" alt="">Copilot</span>
+        <span class="w-tool-pill"><img class="w-tool-icon" src="https://www.google.com/s2/favicons?domain=claude.ai&sz=32" alt="">Claude</span>
+        <span class="w-tool-pill"><img class="w-tool-icon" src="https://www.google.com/s2/favicons?domain=framer.com&sz=32" alt="">Framer</span>
+      </div>
+    </div>
+
   </div>
 </section>
 
