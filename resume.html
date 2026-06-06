@@ -23,21 +23,16 @@
 
   body {
     font-family: 'DM Sans', sans-serif;
-    background: #c4c6c9;
+    background: #ffffff;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 32px 16px;
-    gap: 28px;
+    padding: 0;
+    gap: 0;
   }
 
   .page-label {
-    font-size: 11px;
-    color: #6b7280;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    align-self: flex-start;
-    margin-left: 2px;
+    display: none;
   }
 
   /* A4: 794 × 1123px at 96dpi */
@@ -47,7 +42,7 @@
     height: 1123px;
     display: grid;
     grid-template-columns: 214px 1fr;
-    box-shadow: 0 4px 32px rgba(0,0,0,0.15);
+    box-shadow: none;
     overflow: hidden;
     flex-shrink: 0;
     position: relative;
@@ -229,16 +224,17 @@
 
   @media print {
     body { background: white; padding: 0; gap: 0; }
-    .page { box-shadow: none; page-break-after: always; }
+    .page { box-shadow: none; width: 100%; height: auto; min-height: 297mm; page-break-after: always; }
     .page:last-child { page-break-after: avoid; }
-    .page-label { display: none; }
+    .page-label { display: none !important; }
+    .job { page-break-inside: avoid; }
+    .m-sec { page-break-inside: avoid; }
   }
 </style>
 </head>
 <body>
 
 <!-- ═══════ PAGE 1 ═══════ -->
-<div class="page-label">Page 1 of 2</div>
 <div class="page">
 
   <aside class="sidebar">
@@ -358,9 +354,9 @@
   </main>
 </div><!-- /page 1 -->
 
+<div style="width:794px;height:1px;background:#e5e7eb;flex-shrink:0;"></div>
 
 <!-- ═══════ PAGE 2 ═══════ -->
-<div class="page-label">Page 2 of 2</div>
 <div class="page">
 
   <aside class="sidebar">
