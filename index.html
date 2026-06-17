@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Selva Vignesh — Senior UX Designer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,900;1,400;1,700&family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -14,6 +15,7 @@
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --serif: 'Playfair Display', Georgia, serif;
   --sans: 'DM Sans', sans-serif;
+  --cond:    'Bebas Neue', 'Impact', sans-serif;
   --mono: 'DM Mono', monospace;
   --transition: all 0.5s var(--ease-out);
 }
@@ -45,6 +47,10 @@
   --border: rgba(26,23,20,0.1);
   --border2: rgba(26,23,20,0.2);
   --shadow: rgba(0,0,0,0.15);
+   --cream:   #f2ede6;
+  --cream2:  #e9e3da;
+  --cream3:  #dfd8cd;
+  --ink:     #1c1a17;
 }
 
 html { scroll-behavior: smooth; }
@@ -79,6 +85,14 @@ nav.scrolled { background: rgba(8,8,8,0.88); backdrop-filter:blur(16px); border-
 .nav-links a { font-family:var(--mono); font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--fg2); text-decoration:none; transition:color 0.3s; }
 .nav-links a:hover { color:var(--fg); }
 .nav-right { display:flex; align-items:center; gap:1rem; }
+
+
+/* ─── PROJECT LAYOUT CSS ─── */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 4rem;
+}
 
 /* THEME TOGGLE */
 .theme-toggle {
@@ -217,94 +231,118 @@ section { padding:8rem 4rem; }
 .img-hover-sub { font-family:var(--mono); font-size:0.65rem; letter-spacing:0.1em; text-transform:uppercase; color:rgba(255,255,255,0.55); transform:translateY(12px); transition:transform 0.4s 0.05s var(--ease-out); }
 .img-hover-card:hover .img-hover-sub { transform:translateY(0); }
 
+ /* ═══════════════════════════════════════════════
+   INTERACTIVE: TEXT SCRAMBLE SECTION [SECTION: SCRAMBLE-BAND]
+═══════════════════════════════════════════════ */
+#scramble-band {
+  background: #1c1a17;
+    padding: 4rem 3rem;
+    overflow: hidden;
+    position: relative;
+    align-items: center;
+}
+
+.scramble-track { display:flex; gap:0; align-items:center;
+ 
+  justify-content: center; /* Centers the spans horizontally */
+  width: 100%;             /* Ensure the track takes full width of the parent */
+} }
+.scramble-word {
+  font-family: var(--cond);
+  font-size:clamp(3rem,7vw,7rem);
+  letter-spacing:.03em;
+  color:var(--cream);
+  cursor:none;
+  padding:0 2rem;
+  line-height:1;
+  user-select:none;
+  transition:color .2s;
+  white-space:nowrap;
+  flex-shrink:0;
+}
+.scramble-word {
+  font-family: var(--cond); /* Condensed font */
+  font-size: clamp(3rem, 7vw, 7rem); /* Responsive font size */
+  letter-spacing: 0.03em;
+  color: var(--cream);
+  cursor: none; /* Likely hidden because of a custom cursor implementation */
+  padding: 0 2rem;
+  line-height: 1;
+  user-select: none;
+  transition: color 0.2s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.scramble-word:hover {
+  color: var(--accent); /* Changes color on hover */
+}
+.scramble-word:hover { color:var(--accent); }
+.scramble-sep { color:rgba(250,248,244,.15); padding:0; }
+
+
 /* ─── ABOUT ─── */
 #about { background:var(--bg2); }
-
-/* Top row: text left, photo right */
-.about-top { display:grid; grid-template-columns:1fr 1fr; gap:6rem; align-items:start; margin-bottom:5rem; }
-
+.about-grid { display:grid; grid-template-columns:1fr 1fr; gap:7rem; align-items:start; }
 .about-left h2 { font-family:var(--serif); font-size:clamp(2.5rem,4vw,4.5rem); font-weight:900; line-height:0.95; margin-bottom:2rem; }
 .about-left h2 em { font-style:italic; font-weight:400; color:var(--accent); display:block; }
 .about-body { color:var(--fg2); line-height:1.85; font-size:1.05rem; margin-bottom:1rem; }
-.about-stats { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; margin-top:3rem; background:var(--border); }
-.stat { padding:1.25rem 1rem; background:var(--bg2); }
-.stat-n { font-family:var(--serif); font-size:2.75rem; font-weight:900; color:var(--accent); line-height:1; }
-.stat-l { font-family:var(--mono); font-size:0.65rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--fg3); margin-top:0.4rem; }
-
-/* Photo — right column */
-.about-photo-wrap {
-  position:relative;
-  width:100%;
-}
-.about-photo-frame {
-  position:relative; overflow:hidden;
-  border-radius:4px;
-  aspect-ratio: 3/4;
-  background:var(--bg3);
-}
-.about-photo-frame img {
-  width:100%; height:100%; object-fit:cover; display:block;
-  filter:saturate(0.75);
-  transition:filter 0.5s var(--ease-out), transform 0.6s var(--ease-out);
-}
-.about-photo-wrap:hover .about-photo-frame img { filter:saturate(1); transform:scale(1.03); }
-.about-photo-accent {
-  position:absolute; bottom:-12px; right:-12px;
-  width:100%; height:100%;
-  border:1px solid rgba(232,97,58,0.25);
-  border-radius:4px;
-  z-index:-1;
-  transition:transform 0.4s var(--ease-out);
-}
-.about-photo-wrap:hover .about-photo-accent { transform:translate(5px,5px); }
-.about-photo-badge {
-  position:absolute; bottom:1.25rem; left:1.25rem;
-  background:rgba(8,8,8,0.82); backdrop-filter:blur(8px);
-  border:1px solid var(--border2);
-  border-radius:4px; padding:0.6rem 0.9rem;
-}
-.about-photo-badge-name { font-family:var(--serif); font-size:1rem; font-weight:700; color:var(--fg); line-height:1.2; }
-.about-photo-badge-role { font-family:var(--mono); font-size:0.62rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--accent); margin-top:0.2rem; }
-
-/* Skills row — full width, 4 columns */
-.about-skills { border-top:1px solid var(--border); padding-top:4rem; }
-.about-skills-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:2.5rem; }
-.skills-grp { }
+.about-stats { display:grid; grid-template-columns:1fr 1fr; gap:1px; margin-top:3rem; background:var(--border); }
+.stat { padding:1.5rem; background:var(--bg2); }
+.stat-n { font-family:var(--serif); font-size:3.5rem; font-weight:900; color:var(--accent); line-height:1; }
+.stat-l { font-family:var(--mono); font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--fg3); margin-top:0.4rem; }
+.skills-grp { margin-bottom:2.25rem; }
 .skills-grp-lbl { font-family:var(--mono); font-size:0.72rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--accent); margin-bottom:0.75rem; }
 .skills-list { display:flex; flex-wrap:wrap; gap:0.5rem; }
-.skill { font-size:0.88rem; color:var(--fg2); background:var(--bg3); border:1px solid var(--border); padding:0.4rem 0.9rem; border-radius:100px; transition:all 0.3s; }
+.skill { font-size:0.9rem; color:var(--fg2); background:var(--bg3); border:1px solid var(--border); padding:0.45rem 1rem; border-radius:100px; transition:all 0.3s; }
 .skill:hover { background:var(--accentbg); border-color:rgba(232,97,58,0.3); color:var(--accent); }
 
-/* ─── AI WORKFLOW ─── */
-#ai { background:var(--bg); }
-.ai-intro h2 { font-family:var(--serif); font-size:clamp(2.5rem,4vw,4.5rem); font-weight:900; line-height:0.95; margin-bottom:1.5rem; }
-.ai-intro h2 em { font-style:italic; font-weight:400; color:var(--accent); }
-.ai-intro p { color:var(--fg2); max-width:55ch; line-height:1.8; margin-bottom:4rem; font-size:1.05rem; }
-.workflow { display:grid; grid-template-columns:repeat(5,1fr); gap:0; position:relative; }
-.workflow::before { content:''; position:absolute; top:1.85rem; left:calc(10% + 1rem); right:calc(10% + 1rem); height:1px; background:linear-gradient(90deg,transparent,var(--accent),var(--accent),var(--accent),transparent); opacity:0.25; }
-.w-stage { padding:0 1.5rem; }
-.w-dot { width:40px; height:40px; border:1px solid rgba(232,97,58,0.3); border-radius:50%; display:flex; align-items:center; justify-content:center; margin-bottom:1.5rem; background:var(--bg); position:relative; z-index:1; transition:all 0.3s; }
-.w-stage:hover .w-dot { background:var(--accentbg); border-color:var(--accent); }
-.w-dot-inner { width:8px; height:8px; background:var(--accent); border-radius:50%; }
-.w-num { font-family:var(--mono); font-size:0.7rem; color:var(--accent); letter-spacing:0.1em; margin-bottom:0.6rem; }
-.w-title { font-family:var(--serif); font-size:1.35rem; font-weight:700; margin-bottom:0.6rem; }
-.w-desc { font-size:0.9rem; color:var(--fg2); line-height:1.7; margin-bottom:0.75rem; }
-.w-tools { display:flex; flex-wrap:wrap; gap:0.4rem; margin-top:0.25rem; }
-.w-tool-pill {
-  display:inline-flex; align-items:center; gap:0.35rem;
-  font-family:var(--mono); font-size:0.65rem; letter-spacing:0.05em;
-  color:var(--fg2); background:var(--bg2);
-  border:1px solid var(--border2);
-  padding:0.28rem 0.6rem 0.28rem 0.45rem;
-  border-radius:100px;
-  transition:all 0.3s;
-  white-space:nowrap;
+/* ═══════════════════════════════════════════════
+   AI WORKFLOW  [SECTION: AI-WORKFLOW]
+═══════════════════════════════════════════════ */
+#ai-workflow {
+  background: var(--cream);
+  
 }
-.w-stage:hover .w-tool-pill { border-color:rgba(232,97,58,0.3); color:var(--fg); }
-.w-tool-icon {
-  width:14px; height:14px; border-radius:3px;
-  object-fit:contain; flex-shrink:0; display:block;
+.ai-top {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:5rem; align-items:center; margin-bottom:6rem;
 }
+.ai-headline {
+  font-family:var(--display); font-size:clamp(2.8rem,4.5vw,5rem);
+  font-weight:900; line-height:.95; letter-spacing:-.02em;
+}
+.ai-headline em { font-style:italic; font-weight:400; color:var(--accent); display:block; }
+.ai-right-text { font-size:1rem; color:var(--muted); line-height:1.8; }
+
+/* Flow cards */
+.ai-flow {
+  display:grid; grid-template-columns:repeat(5,1fr);
+  gap:1px; background:rgba(28,26,23,.1);
+}
+.ai-stage {
+  background:var(--cream); padding:1.75rem 1.5rem;
+  transition:background .3s, transform .3s var(--ease);
+  position:relative; cursor:none;
+}
+.ai-stage:hover { background:var(--cream2); transform:translateY(-4px); }
+.ai-stage:hover .as-num, .ai-stage:hover .as-title,
+.ai-stage:hover .as-desc, .ai-stage:hover .as-tool { color:var(--white); }
+.ai-stage:hover .as-tool { color:rgba(250,248,244,.45); }
+.as-num { font-family:var(--mono); font-size:.62rem; color:var(--accent); letter-spacing:.1em; margin-bottom:.75rem; }
+.as-title { font-family:var(--display); font-size:1.3rem; font-weight:700; margin-bottom:.65rem; transition:color .3s; }
+.as-desc { font-size:.82rem; color:var(--muted); line-height:1.65; margin-bottom:1.25rem; flex:1; transition:color .3s; }
+.as-tools { display:flex; flex-wrap:wrap; gap:.4rem; margin-top:auto; }
+.as-tool-chip {
+  display:flex; align-items:center; gap:.35rem;
+  font-family:var(--mono); font-size:.6rem; letter-spacing:.06em;
+  color:var(--muted); background:rgba(28,26,23,.06);
+  border:1px solid rgba(28,26,23,.1); padding:.22rem .6rem; border-radius:2px;
+  transition:all .3s;
+}
+.ai-stage:hover .as-tool-chip { background:rgba(255,255,255,.07); border-color:rgba(255,255,255,.15); color:rgba(250,248,244,.7); }
+.as-tool-chip svg { width:12px; height:12px; flex-shrink:0; }
+
 
 /* ─── EXPERIENCE ─── */
 #exp { background:var(--bg2); }
@@ -519,18 +557,20 @@ footer span { color:var(--accent); }
   .img-hover-title { transform:none; }
   .img-hover-sub { transform:none; }
 
+
+ 
   /* About */
-  .about-top { grid-template-columns:1fr; gap:3rem; }
+  .about-grid { grid-template-columns:1fr; gap:3rem; }
   .about-left h2 { font-size:clamp(2.2rem,8vw,3rem); }
   .about-body { font-size:1rem; }
   .about-stats { grid-template-columns:1fr 1fr; }
-  .stat-n { font-size:2.25rem; }
-  .about-skills-grid { grid-template-columns:1fr 1fr; gap:2rem; }
-  .about-photo-wrap { max-width:100%; }
+  .stat-n { font-size:2.75rem; }
 
   /* AI workflow — single col stack */
-  .workflow { grid-template-columns:1fr; gap:0; }
+  .workflow { grid-template-columns:1fr; gap:0;  padding: 5rem 1.5rem;}
   .workflow::before { display:none; }
+  .ai-flow { grid-template-columns:1fr; }
+  .ai-top { grid-template-columns:1fr; gap:2rem; }
   .w-stage {
     padding:1.5rem 0;
     border-bottom:1px solid var(--border);
@@ -543,7 +583,7 @@ footer span { color:var(--accent); }
   .w-num { grid-row:1; grid-column:2; align-self:center; margin-bottom:0; }
   .w-title { grid-row:2; grid-column:2; margin-top:0.5rem; font-size:1.2rem; }
   .w-desc { grid-row:3; grid-column:2; font-size:0.9rem; }
-  .w-tools { grid-row:4; grid-column:2; flex-wrap:wrap; }
+  .w-tools { grid-row:4; grid-column:2; }
   .w-stage:last-child { border-bottom:none; }
 
   /* Experience */
@@ -554,7 +594,7 @@ footer span { color:var(--accent); }
   .tl-desc { font-size:0.92rem; }
 
   /* Philosophy */
-  .phq { font-size:clamp(1.8rem,7vw,3rem); }
+  
   .phs { font-size:0.97rem; }
 
   /* Playground */
@@ -623,8 +663,7 @@ footer span { color:var(--accent); }
     <li><a href="#ai">AI Workflow</a></li>
     <li><a href="#playground">Playground</a></li>
     <li><a href="#ux-wordle">Game</a></li>
-     <li><a href="resume.html">Resume</a></li>
-  </ul>
+    <li><a href="#contact">Contact</a></li>
   <div class="nav-right">
     <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
       <div class="theme-toggle-knob" id="themeKnob">
@@ -658,9 +697,8 @@ footer span { color:var(--accent); }
   </div>
 
   <h1 class="hero-headline">
-    Designing<br>
-    with <em>speed,</em><br>
-    systems & AI.
+    <em>Hi!,</em>i'm<br>
+    Selva Vignesh Anandan<br>
   </h1>
 
   <div class="hero-bottom">
@@ -712,7 +750,7 @@ footer span { color:var(--accent); }
   <div class="project-list">
     <a class="project-row reveal"
       data-img="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=640&q=80"
-      href="#">
+      href="/projectfoi.html">
       <span class="pr-num">01</span>
       <div class="pr-info">
         <div class="pr-name">Florida Orthopedic Hospital</div>
@@ -807,6 +845,26 @@ footer span { color:var(--accent); }
   </div>
 </div>
 
+
+<!-- ═══════════════════════════════════════════════
+     SCRAMBLE BAND [SECTION: SCRAMBLE-BAND]
+═══════════════════════════════════════════════ -->
+<div id="scramble-band">
+  <div class="scramble-track" id="scrambleTrack">
+    <span class="scramble-word" data-word="SYSTEMS">SYSTEMS</span>
+    <span class="scramble-word scramble-sep">·</span>
+    <span class="scramble-word" data-word="SPEED">SPEED</span>
+    <span class="scramble-word scramble-sep">·</span>
+    <span class="scramble-word" data-word="CLARITY">CLARITY</span>
+    <span class="scramble-word scramble-sep">·</span>
+    <span class="scramble-word" data-word="AI">AI</span>
+    <span class="scramble-word scramble-sep">·</span>
+    <span class="scramble-word" data-word="CRAFT">CRAFT</span>
+    <span class="scramble-word scramble-sep">·</span>
+    <span class="scramble-word" data-word="IMPACT">IMPACT</span>
+  </div>
+</div>
+
 <!-- ABOUT -->
 <section id="about">
   <div class="section-hdr reveal">
@@ -815,8 +873,7 @@ footer span { color:var(--accent); }
     <span class="sec-lbl">About</span>
   </div>
 
-  <div class="about-top">
-    <!-- LEFT: heading + bio + stats -->
+  <div class="about-grid">
     <div class="about-left">
       <h2 class="reveal">Designing<br>beyond<br><em>interfaces.</em></h2>
       <p class="about-body reveal rd1">I design products that simplify complexity.</p>
@@ -829,136 +886,98 @@ footer span { color:var(--accent); }
         <div class="stat"><div class="stat-n">AI</div><div class="stat-l">Native workflow</div></div>
       </div>
     </div>
-
-    <!-- RIGHT: photo -->
-    <div class="about-photo-wrap reveal rd1">
-      <div class="about-photo-frame">
-        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=680&q=80&fit=crop&crop=face" alt="Selva Vignesh">
-      </div>
-      <div class="about-photo-accent"></div>
-      <div class="about-photo-badge">
-        <div class="about-photo-badge-name">Selva Vignesh</div>
-        <div class="about-photo-badge-role">Senior UX Designer</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- SKILLS: full-width 4-column grid -->
-  <div class="about-skills reveal rd2">
-    <div class="about-skills-grid">
-      <div class="skills-grp">
-        <div class="skills-grp-lbl">Design</div>
-        <div class="skills-list">
-          <span class="skill">UX Strategy</span><span class="skill">Product Design</span><span class="skill">Design Systems</span><span class="skill">Interaction Design</span><span class="skill">Information Architecture</span><span class="skill">Prototyping</span>
-        </div>
-      </div>
-      <div class="skills-grp">
-        <div class="skills-grp-lbl">Tools</div>
-        <div class="skills-list">
-          <span class="skill">Figma</span><span class="skill">Figma AI</span><span class="skill">Framer</span><span class="skill">Principle</span><span class="skill">Lottie</span><span class="skill">Zeplin</span>
-        </div>
-      </div>
-      <div class="skills-grp">
-        <div class="skills-grp-lbl">AI Stack</div>
-        <div class="skills-list">
-          <span class="skill">Claude</span><span class="skill">ChatGPT</span><span class="skill">Gemini</span><span class="skill">Google Stitch</span><span class="skill">Midjourney</span><span class="skill">AI Prototyping</span>
-        </div>
-      </div>
-      <div class="skills-grp">
-        <div class="skills-grp-lbl">Research</div>
-        <div class="skills-list">
-          <span class="skill">User Interviews</span><span class="skill">Heuristic Evaluation</span><span class="skill">Usability Testing</span><span class="skill">Journey Mapping</span><span class="skill">UX Audits</span>
-        </div>
-      </div>
+    <div class="about-right reveal rd2">
+      <div class="skills-grp"><div class="skills-grp-lbl">Design</div><div class="skills-list"><span class="skill">UX Strategy</span><span class="skill">Product Design</span><span class="skill">Design Systems</span><span class="skill">Interaction Design</span><span class="skill">Information Architecture</span><span class="skill">Prototyping</span></div></div>
+      <div class="skills-grp"><div class="skills-grp-lbl">Tools</div><div class="skills-list"><span class="skill">Figma</span><span class="skill">Figma AI</span><span class="skill">Framer</span><span class="skill">Principle</span><span class="skill">Lottie</span><span class="skill">Zeplin</span></div></div>
+      <div class="skills-grp"><div class="skills-grp-lbl">AI Stack</div><div class="skills-list"><span class="skill">Claude</span><span class="skill">ChatGPT</span><span class="skill">Gemini</span><span class="skill">Google Stitch</span><span class="skill">Midjourney</span><span class="skill">AI Prototyping</span></div></div>
+      <div class="skills-grp"><div class="skills-grp-lbl">Research</div><div class="skills-list"><span class="skill">User Interviews</span><span class="skill">Heuristic Evaluation</span><span class="skill">Usability Testing</span><span class="skill">Journey Mapping</span><span class="skill">UX Audits</span></div></div>
     </div>
   </div>
 </section>
 
-<!-- AI WORKFLOW -->
-<section id="ai">
-  <div class="section-hdr reveal">
+<!-- ═══════════════════════════════════════════════
+     AI WORKFLOW [SECTION: AI-WORKFLOW]
+═══════════════════════════════════════════════ -->
+<section id="ai-workflow">
+  <div class="ai-top">
+    <div>
+      <div class="section-hdr reveal">
     <span class="sec-num">03</span>
     <div class="sec-line"></div>
-    <span class="sec-lbl">AI Workflow</span>
+    <span class="sec-lbl">Process</span>
   </div>
-  <div class="ai-intro">
-    <h2 class="reveal">Designing with AI,<br>not <em>around</em> it.</h2>
-    <p class="reveal rd1">AI has become central to my product workflow — accelerating research, ideation, structure, and execution while keeping human-centered decision making at the core.</p>
+  <div class="about-left">
+        <h2 class="reveal">Designing<br>with AI,<br>not<em>around</em> it.</h2>
+    
+    </div>
+    <div>
+      <p class="ai-right-text reveal rd2">AI has become central to my product workflow — accelerating research, ideation, structure, and execution while keeping human-centered decision making at the core. Not a gimmick. A real shift in how I work.</p>
+    </div>
   </div>
-  <div class="workflow">
+  </div>
 
-    <!-- 01 Research -->
-    <div class="w-stage reveal">
-      <div class="w-dot"><div class="w-dot-inner"></div></div>
-      <div class="w-num">01</div>
-      <div class="w-title">Research</div>
-      <div class="w-desc">Accelerating competitor analysis, heuristic reviews, UX audits, and idea expansion.</div>
-      <div class="w-tools">
-        <span class="w-tool-pill"><img class="w-tool-icon" src="https://www.google.com/s2/favicons?domain=chat.openai.com&sz=32" alt="">ChatGPT</span>
-        <span class="w-tool-pill"><img class="w-tool-icon" src="https://www.google.com/s2/favicons?domain=gemini.google.com&sz=32" alt="">Gemini</span>
-        <span class="w-tool-pill"><img class="w-tool-icon" src="https://www.google.com/s2/favicons?domain=miro.com&sz=32" alt="">Miro</span>
-        <span class="w-tool-pill"><img class="w-tool-icon" src="https://www.google.com/s2/favicons?domain=notion.so&sz=32" alt="">Notion</span>
+  <div class="ai-flow reveal">
+    <!-- RESEARCH -->
+    <div class="ai-stage">
+      <div class="as-num">01</div>
+      <div class="as-title">Research</div>
+      <div class="as-desc">Competitor analysis, heuristic reviews, UX audits, and idea expansion grounded in real user data.</div>
+      <div class="as-tools">
+        <span class="as-tool-chip"><svg viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#10a37f"/><text x="16" y="22" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="bold" fill="white">G</text></svg>ChatGPT</span>
+        <span class="as-tool-chip"><svg viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#1a73e8"/><text x="16" y="22" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="bold" fill="white">Gm</text></svg>Gemini</span>
+        <span class="as-tool-chip"><svg viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#ffd02f"/><text x="16" y="22" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="bold" fill="#050038">M</text></svg>Miro</span>
+        <span class="as-tool-chip"><svg viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#fff" stroke="#ddd" stroke-width="1"/><text x="16" y="22" text-anchor="middle" font-family="serif" font-size="16" font-weight="bold" fill="#000">N</text></svg>Notion</span>
       </div>
     </div>
-
-    <!-- 02 Structure -->
-    <div class="w-stage reveal rd1">
-      <div class="w-dot"><div class="w-dot-inner"></div></div>
-      <div class="w-num">02</div>
-      <div class="w-title">Structure</div>
-      <div class="w-desc">Generating user flows, content structures, journey mapping, and UX writing frameworks.</div>
-      <div class="w-tools">
-        <span class="w-tool-pill"><img class="w-tool-icon" src="https://www.google.com/s2/favicons?domain=claude.ai&sz=32" alt="">Claude</span>
-        <span class="w-tool-pill"><img class="w-tool-icon" src="https://www.google.com/s2/favicons?domain=miro.com&sz=32" alt="">Miro</span>
-        <span class="w-tool-pill"><img class="w-tool-icon" src="https://www.google.com/s2/favicons?domain=notion.so&sz=32" alt="">Notion</span>
-        <span class="w-tool-pill"><img class="w-tool-icon" src="https://www.google.com/s2/favicons?domain=monday.com&sz=32" alt="">Monday</span>
+    <!-- STRUCTURE -->
+    <div class="ai-stage">
+      <div class="as-num">02</div>
+      <div class="as-title">Structure</div>
+      <div class="as-desc">User flows, information architecture, journey mapping, and UX writing — giving shape to complexity.</div>
+      <div class="as-tools">
+        <span class="as-tool-chip"><svg viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#cc785c"/><text x="16" y="22" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="bold" fill="white">Cl</text></svg>Claude</span>
+        <span class="as-tool-chip"><svg viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#ffd02f"/><text x="16" y="22" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="bold" fill="#050038">M</text></svg>Miro</span>
+        <span class="as-tool-chip"><svg viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#fff" stroke="#ddd" stroke-width="1"/><text x="16" y="22" text-anchor="middle" font-family="serif" font-size="16" font-weight="bold" fill="#000">N</text></svg>Notion</span>
+        <span class="as-tool-chip"><svg viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#f82b60"/><circle cx="9" cy="16" r="3.5" fill="#ff7f48"/><circle cx="17" cy="16" r="3.5" fill="#ffcb00"/><circle cx="25" cy="16" r="3.5" fill="#00d647"/></svg>Monday</span>
       </div>
     </div>
-
-    <!-- 03 Exploration -->
-    <div class="w-stage reveal rd2">
-      <div class="w-dot"><div class="w-dot-inner"></div></div>
-      <div class="w-num">03</div>
-      <div class="w-title">Exploration</div>
-      <div class="w-desc">Rapid interface generation, layout exploration, and scalable UI experimentation.</div>
-      <div class="w-tools">
-        <span class="w-tool-pill"><img class="w-tool-icon" src="https://www.google.com/s2/favicons?domain=figma.com&sz=32" alt="">Figma</span>
-        <span class="w-tool-pill"><img class="w-tool-icon" src="https://www.google.com/s2/favicons?domain=figma.com&sz=32" alt="">Figma AI</span>
-        <span class="w-tool-pill"><img class="w-tool-icon" src="https://www.google.com/s2/favicons?domain=stitch.withgoogle.com&sz=32" alt="">Stitch</span>
-        <span class="w-tool-pill"><img class="w-tool-icon" src="https://www.google.com/s2/favicons?domain=lovable.dev&sz=32" alt="">Lovable</span>
-        <span class="w-tool-pill"><img class="w-tool-icon" src="https://www.google.com/s2/favicons?domain=uizard.io&sz=32" alt="">Uizard</span>
+    <!-- EXPLORATION -->
+    <div class="ai-stage">
+      <div class="as-num" style="color:var(--accent);">03</div>
+      <div class="as-title">Exploration</div>
+      <div class="as-desc">Rapid interface generation, layout exploration, and scalable UI experimentation — concept to visual in hours.</div>
+      <div class="as-tools">
+        <span class="as-tool-chip"><svg viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#1e1e1e"/><circle cx="21" cy="11" r="5" fill="#1abcfe"/><path d="M11 6h5a5 5 0 0 1 0 10h-5z" fill="#ff7262"/><circle cx="16" cy="21" r="5" fill="#f24e1e"/></svg>Figma</span>
+        <span class="as-tool-chip"><svg viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#1e1e1e"/><circle cx="16" cy="14" r="6" fill="#a259ff"/><text x="16" y="28" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#a259ff">AI</text></svg>Figma AI</span>
+        <span class="as-tool-chip"><svg viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#1a73e8"/><text x="16" y="22" text-anchor="middle" font-family="sans-serif" font-size="9" font-weight="bold" fill="white">Stitch</text></svg>Stitch</span>
+        <span class="as-tool-chip"><svg viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#d94f2b"/><text x="16" y="22" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="bold" fill="white">L</text></svg>Lovable</span>
+        <span class="as-tool-chip"><svg viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#4f46e5"/><text x="16" y="22" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="bold" fill="white">Ui</text></svg>Uizard</span>
       </div>
     </div>
-
-    <!-- 04 Validation -->
-    <div class="w-stage reveal rd3">
-      <div class="w-dot"><div class="w-dot-inner"></div></div>
-      <div class="w-num">04</div>
-      <div class="w-title">Validation</div>
-      <div class="w-desc">Refining usability, accessibility, edge cases, and interaction consistency.</div>
-      <div class="w-tools">
-        <span class="w-tool-pill"><img class="w-tool-icon" src="https://www.google.com/s2/favicons?domain=claude.ai&sz=32" alt="">Claude</span>
-        <span class="w-tool-pill"><img class="w-tool-icon" src="https://www.google.com/s2/favicons?domain=chat.openai.com&sz=32" alt="">ChatGPT</span>
-        <span class="w-tool-pill"><img class="w-tool-icon" src="https://www.google.com/s2/favicons?domain=figma.com&sz=32" alt="">Figma</span>
+    <!-- VALIDATION -->
+    <div class="ai-stage">
+      <div class="as-num">04</div>
+      <div class="as-title">Validation</div>
+      <div class="as-desc">Refining usability, accessibility, and interaction consistency with AI-assisted review loops.</div>
+      <div class="as-tools">
+        <span class="as-tool-chip"><svg viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#cc785c"/><text x="16" y="22" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="bold" fill="white">Cl</text></svg>Claude</span>
+        <span class="as-tool-chip"><svg viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#10a37f"/><text x="16" y="22" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="bold" fill="white">G</text></svg>ChatGPT</span>
+        <span class="as-tool-chip"><svg viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#1e1e1e"/><circle cx="21" cy="11" r="5" fill="#1abcfe"/><path d="M11 6h5a5 5 0 0 1 0 10h-5z" fill="#ff7262"/><circle cx="16" cy="21" r="5" fill="#f24e1e"/></svg>Figma</span>
       </div>
     </div>
-
-    <!-- 05 Delivery -->
-    <div class="w-stage reveal rd4">
-      <div class="w-dot"><div class="w-dot-inner"></div></div>
-      <div class="w-num">05</div>
-      <div class="w-title">Delivery</div>
-      <div class="w-desc">Supporting frontend prototyping, collaboration, and faster developer handoff.</div>
-      <div class="w-tools">
-        <span class="w-tool-pill"><img class="w-tool-icon" src="https://www.google.com/s2/favicons?domain=code.visualstudio.com&sz=32" alt="">VS Code</span>
-        <span class="w-tool-pill"><img class="w-tool-icon" src="https://www.google.com/s2/favicons?domain=github.com&sz=32" alt="">GitHub</span>
-        <span class="w-tool-pill"><img class="w-tool-icon" src="https://www.google.com/s2/favicons?domain=azure.microsoft.com&sz=32" alt="">Azure</span>
-        <span class="w-tool-pill"><img class="w-tool-icon" src="https://www.google.com/s2/favicons?domain=github.com/features/copilot&sz=32" alt="">Copilot</span>
-        <span class="w-tool-pill"><img class="w-tool-icon" src="https://www.google.com/s2/favicons?domain=claude.ai&sz=32" alt="">Claude</span>
-        <span class="w-tool-pill"><img class="w-tool-icon" src="https://www.google.com/s2/favicons?domain=framer.com&sz=32" alt="">Framer</span>
+    <!-- DELIVERY -->
+    <div class="ai-stage">
+      <div class="as-num">05</div>
+      <div class="as-title">Delivery</div>
+      <div class="as-desc">Frontend prototyping, developer handoff, and collaborative shipping with modern tooling.</div>
+      <div class="as-tools">
+        <span class="as-tool-chip"><svg viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#007acc"/><path d="M6 10l10 6-10 6V10zm10-4l10 6v8l-10 6V6z" fill="white" opacity="0.9"/></svg>VS Code</span>
+        <span class="as-tool-chip"><svg viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#24292e"/><path d="M16 4C9.37 4 4 9.37 4 16c0 5.3 3.44 9.8 8.2 11.38.6.1.82-.26.82-.58v-2.03c-3.34.72-4.04-1.61-4.04-1.61-.54-1.38-1.33-1.75-1.33-1.75-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.48 1 .1-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.23A11.5 11.5 0 0116 10.8c1.02 0 2.04.14 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.66 1.65.24 2.87.12 3.17.77.84 1.23 1.91 1.23 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.22.7.83.58C24.56 25.8 28 21.3 28 16c0-6.63-5.37-12-12-12z" fill="white"/></svg>GitHub</span>
+        <span class="as-tool-chip"><svg viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#0078d4"/><path d="M7 24l7-16 5 9-4 4H7zm11-14l4 14h-7l3-4z" fill="white"/></svg>Azure</span>
+        <span class="as-tool-chip"><svg viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#cc785c"/><text x="16" y="22" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="bold" fill="white">Cl</text></svg>Claude</span>
+        <span class="as-tool-chip"><svg viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#0055ff"/><path d="M8 8h16v8H16L8 8zm0 8h8l8 8H8v-8z" fill="white"/></svg>Framer</span>
       </div>
     </div>
-
   </div>
 </section>
 
@@ -1075,6 +1094,29 @@ document.querySelectorAll('.project-row').forEach(row => {
   cImg.style.top = imgY + 'px';
   requestAnimationFrame(animImg);
 })();
+
+
+
+// ── TEXT SCRAMBLE on hover ─────────────────────
+const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+function scramble(el) {
+  const word = el.dataset.word || el.textContent;
+  let iter=0;
+  clearInterval(el._scTimer);
+  el._scTimer = setInterval(()=>{
+    el.textContent = word.split('').map((c,i)=>{
+      if(i < iter) return word[i];
+      return chars[Math.floor(Math.random()*chars.length)];
+    }).join('');
+    if(iter >= word.length){ clearInterval(el._scTimer); el.textContent=word; }
+    iter += .5;
+  },35);
+}
+document.querySelectorAll('.scramble-word[data-word]').forEach(el=>{
+  el.addEventListener('mouseenter',()=>scramble(el));
+});
+
+
 
 // ─── NAV SCROLL
 const nav = document.getElementById('nav');

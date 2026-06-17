@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Florida Orthopedic Hospital — Selva Vignesh</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,900;1,400;1,700&family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════
+   TOKENS — exact match to index.html
+═══════════════════════════════════════ */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --ease-out: cubic-bezier(0.16,1,0.3,1);
+  --serif: 'Playfair Display', Georgia, serif;
+  --sans:  'DM Sans', sans-serif;
+  --cond:  'Bebas Neue', 'Impact', sans-serif;
+  --mono:  'DM Mono', monospace;
+}
+[data-theme="dark"] {
+  --bg:       #080808;
+  --bg2:      #111111;
+  --bg3:      #181818;
+  --fg:       #f0ebe3;
+  --fg2:      rgba(240,235,227,0.55);
+  --fg3:      rgba(240,235,227,0.25);
+  --accent:   #e8613a;
+  --accent2:  #ff8c6b;
+  --accentbg: rgba(232,97,58,0.1);
+  --border:   rgba(240,235,227,0.07);
+  --border2:  rgba(240,235,227,0.14);
+  --shadow:   rgba(0,0,0,0.5);
+}
+[data-theme="light"] {
+  --bg:       #f4f0ea;
+  --bg2:      #ede9e2;
+  --bg3:      #e5e0d8;
+  --fg:       #1a1714;
+  --fg2:      rgba(26,23,20,0.6);
+  --fg3:      rgba(26,23,20,0.3);
+  --accent:   #d44d1f;
+  --accent2:  #e8613a;
+  --accentbg: rgba(212,77,31,0.08);
+  --border:   rgba(26,23,20,0.1);
+  --border2:  rgba(26,23,20,0.2);
+  --shadow:   rgba(0,0,0,0.15);
+}
+
+html { scroll-behavior:smooth; }
+body {
+  background:var(--bg); color:var(--fg);
+  font-family:var(--sans); font-weight:300;
+  overflow-x:hidden; cursor:none;
+  transition:background 0.5s var(--ease-out), color 0.5s var(--ease-out);
+}
+
+/* ═══════════════════════════════════════
+   CURSOR
+═══════════════════════════════════════ */
+.cursor      { position:fixed; width:8px; height:8px; background:var(--accent); border-radius:50%; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); transition:width .3s,height .3s,background .3s; }
+.cursor-ring { position:fixed; width:36px; height:36px; border:1px solid rgba(232,97,58,0.45); border-radius:50%; pointer-events:none; z-index:9998; transform:translate(-50%,-50%); transition:width .4s var(--ease-out),height .4s var(--ease-out); }
+body.cursor-hover .cursor      { width:16px; height:16px; }
+body.cursor-hover .cursor-ring { width:52px; height:52px; opacity:0.6; }
+
+/* ═══════════════════════════════════════
+   PROGRESS BAR
+═══════════════════════════════════════ */
+#progress-bar { position:fixed; top:0; left:0; height:2px; background:var(--accent); z-index:200; width:0%; transition:width .1s linear; }
+
+/* ═══════════════════════════════════════
+   NAV
+═══════════════════════════════════════ */
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:1.5rem 4rem;
+  transition:background .4s, border-color .4s, backdrop-filter .4s;
+}
+nav.scrolled { background:rgba(8,8,8,0.88); backdrop-filter:blur(16px); border-bottom:1px solid var(--border); }
+[data-theme="light"] nav.scrolled { background:rgba(244,240,234,0.9); }
+
+.nav-logo { font-family:var(--serif); font-size:1.2rem; font-weight:900; color:var(--fg); text-decoration:none; }
+.nav-logo .dot { color:var(--accent); }
+.nav-links { display:flex; gap:2.5rem; list-style:none; }
+.nav-links a { font-family:var(--mono); font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--fg2); text-decoration:none; transition:color .3s; }
+.nav-links a:hover { color:var(--fg); }
+.nav-right { display:flex; align-items:center; gap:1rem; }
+
+.nav-back {
+  display:flex; align-items:center; gap:0.5rem;
+  font-family:var(--mono); font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase;
+  color:var(--fg2); text-decoration:none; transition:color .25s;
+}
+.nav-back svg { width:16px; height:16px; transition:transform .25s var(--ease-out); }
+.nav-back:hover { color:var(--accent); }
+.nav-back:hover svg { transform:translateX(-3px); }
+
+/* theme toggle */
+.theme-toggle { position:relative; width:52px; height:28px; background:var(--bg3); border:1px solid var(--border2); border-radius:100px; cursor:pointer; transition:background .4s,border-color .4s; display:flex; align-items:center; }
+.theme-toggle-knob { position:absolute; left:3px; width:22px; height:22px; border-radius:50%; background:var(--accent); transition:transform .4s var(--ease-out),background .3s; display:flex; align-items:center; justify-content:center; font-size:11px; }
+[data-theme="light"] .theme-toggle-knob { transform:translateX(24px); }
+.theme-toggle-icon { pointer-events:none; }
+
+/* nav proj title appears on scroll */
+.nav-proj-title { font-family:var(--mono); font-size:0.68rem; letter-spacing:0.08em; color:var(--fg2); opacity:0; transition:opacity .3s; }
+nav.scrolled .nav-proj-title { opacity:1; }
+
+/* ═══════════════════════════════════════
+   SHARED UTILITIES
+═══════════════════════════════════════ */
+.mono-label {
+  font-family:var(--mono); font-size:0.68rem; letter-spacing:0.14em;
+  text-transform:uppercase; color:var(--accent);
+  display:flex; align-items:center; gap:0.6rem; margin-bottom:2.5rem;
+}
+.mono-label::before { content:''; width:20px; height:1px; background:var(--accent); }
+
+.reveal { opacity:0; transform:translateY(28px); transition:opacity .85s var(--ease-out),transform .85s var(--ease-out); }
+.reveal.visible { opacity:1; transform:none; }
+.rd1{transition-delay:.08s;} .rd2{transition-delay:.16s;} .rd3{transition-delay:.24s;}
+.rd4{transition-delay:.32s;} .rd5{transition-delay:.4s;}
+
+/* ═══════════════════════════════════════
+   CS-HERO  [SECTION: CS-HERO]
+═══════════════════════════════════════ */
+#cs-hero {
+  min-height:100vh; position:relative; overflow:hidden;
+  display:flex; flex-direction:column; justify-content:flex-end;
+  background:var(--bg3);
+}
+.cs-hero-img {
+  position:absolute; inset:0;
+  background:url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1400&q=80') center/cover no-repeat;
+  filter:brightness(0.35) saturate(0.6);
+  transform:scale(1.04); animation:hzoom 10s ease-in-out forwards;
+}
+@keyframes hzoom { to{transform:scale(1);} }
+.cs-hero-overlay { position:absolute; inset:0; background:linear-gradient(to top,rgba(8,8,8,.92) 0%,rgba(8,8,8,.3) 60%,transparent 100%); }
+.cs-hero-grid { position:absolute; inset:0; background-image:linear-gradient(rgba(240,235,227,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(240,235,227,.04) 1px,transparent 1px); background-size:60px 60px; }
+
+.cs-hero-content {
+  position:relative; z-index:2;
+  padding:0 4rem 4rem;
+}
+.cs-hero-eyebrow {
+  display:flex; align-items:center; gap:.85rem; margin-bottom:1.75rem;
+  opacity:0; animation:fadeUp .8s var(--ease-out) .4s forwards;
+}
+.cs-hero-eyebrow-line { width:28px; height:1px; background:var(--accent); }
+.cs-hero-eyebrow span { font-family:var(--mono); font-size:.68rem; letter-spacing:.14em; text-transform:uppercase; color:rgba(240,235,227,.5); }
+
+.cs-hero-title {
+  font-family:var(--cond);
+  font-size:clamp(4.5rem,12vw,14rem);
+  line-height:.88; letter-spacing:.02em; color:#f0ebe3;
+  opacity:0; animation:fadeUp .9s var(--ease-out) .55s forwards;
+}
+.cs-hero-title .italic-sub {
+  display:block; font-family:var(--serif); font-style:italic;
+  font-weight:400; font-size:clamp(1.8rem,4vw,4rem);
+  color:rgba(240,235,227,.45); letter-spacing:.01em;
+  margin-top:.5rem;
+}
+
+.cs-hero-meta {
+  display:grid; grid-template-columns:repeat(4,1fr); gap:2px;
+  background:rgba(240,235,227,.07);
+  border-top:1px solid rgba(240,235,227,.1);
+  margin-top:3rem;
+  opacity:0; animation:fadeUp .8s var(--ease-out) .85s forwards;
+}
+.meta-item { padding:1.5rem 1.75rem; background:rgba(8,8,8,.2); }
+.meta-label { font-family:var(--mono); font-size:.58rem; letter-spacing:.14em; text-transform:uppercase; color:rgba(240,235,227,.3); margin-bottom:.5rem; }
+.meta-value { font-size:.95rem; color:rgba(240,235,227,.8); font-weight:400; line-height:1.4; }
+
+@keyframes fadeUp { from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);} }
+
+/* ═══════════════════════════════════════
+   SECTION WRAPPER
+═══════════════════════════════════════ */
+.cs-section { padding:8rem 4rem; }
+.cs-section-inner { max-width:1200px; margin:0 auto; }
+.cs-divider { height:1px; background:var(--border); margin:0 4rem; }
+
+/* Two-col grid */
+.cs-two-col { display:grid; grid-template-columns:1fr 1fr; gap:6rem; align-items:start; }
+.cs-two-col-wide { display:grid; grid-template-columns:1.2fr 1fr; gap:6rem; align-items:start; }
+
+/* Section headline */
+.cs-h2 {
+  font-family:var(--cond);
+  font-size:clamp(3rem,7vw,8rem);
+  line-height:.88; letter-spacing:.02em;
+  color:var(--fg); margin-bottom:1.75rem;
+}
+.cs-h2 em { font-family:var(--serif); font-style:italic; font-weight:400; color:var(--accent); }
+
+/* Body copy */
+.cs-body { font-size:1.05rem; line-height:1.85; color:var(--fg2); margin-bottom:1.25rem; }
+.cs-body strong { color:var(--fg); font-weight:500; }
+
+/* ═══════════════════════════════════════
+   IMAGE PLACEHOLDERS / BLOCKS
+═══════════════════════════════════════ */
+.cs-img {
+  width:100%; position:relative; overflow:hidden;
+  background:var(--bg2); border:1px solid var(--border);
+  border-radius:6px;
+}
+.cs-img img { width:100%; height:100%; object-fit:cover; display:block; filter:saturate(.75); transition:transform .7s var(--ease-out),filter .5s; }
+.cs-img:hover img { transform:scale(1.03); filter:saturate(1); }
+.cs-img-badge {
+  position:absolute; top:.85rem; left:.85rem;
+  font-family:var(--mono); font-size:.58rem; letter-spacing:.12em; text-transform:uppercase;
+  background:rgba(8,8,8,.65); color:rgba(240,235,227,.7);
+  padding:.28rem .7rem; border-radius:3px; backdrop-filter:blur(4px);
+}
+.cs-img-caption { font-family:var(--mono); font-size:.62rem; letter-spacing:.08em; text-transform:uppercase; color:var(--fg3); margin-top:.75rem; }
+.cs-img-16-9  { aspect-ratio:16/9; }
+.cs-img-4-3   { aspect-ratio:4/3; }
+.cs-img-3-2   { aspect-ratio:3/2; }
+.cs-img-1-1   { aspect-ratio:1/1; }
+.cs-img-wide  { aspect-ratio:21/8; }
+
+/* two images side by side */
+.cs-img-pair { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+
+/* three images side by side */
+.cs-img-trio { display:grid; grid-template-columns:1fr 1fr 1fr; gap:1rem; }
+
+/* ═══════════════════════════════════════
+   OVERVIEW  [SECTION: CS-OVERVIEW]
+═══════════════════════════════════════ */
+#cs-overview { background:var(--bg); }
+
+/* ═══════════════════════════════════════
+   PROBLEM  [SECTION: CS-PROBLEM]
+═══════════════════════════════════════ */
+#cs-problem { background:var(--bg2); }
+
+.pain-list { display:flex; flex-direction:column; gap:.5rem; margin-top:2rem; }
+.pain-item {
+  display:flex; align-items:flex-start; gap:1rem;
+  padding:1rem 1.25rem;
+  border:1px solid var(--border); border-radius:4px;
+  transition:border-color .3s, background .3s; cursor:default;
+}
+.pain-item:hover { background:var(--bg); border-color:rgba(212,77,31,.2); }
+.pain-icon { width:28px; height:28px; border-radius:50%; background:var(--accentbg); display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:.8rem; }
+.pain-text strong { color:var(--fg); font-weight:500; display:block; margin-bottom:.15rem; font-size:.88rem; font-family:var(--mono); letter-spacing:.04em; }
+.pain-text span  { font-size:.9rem; color:var(--fg2); line-height:1.55; }
+
+.challenge-callout {
+  background:var(--bg3); border-left:2px solid var(--accent);
+  padding:2rem 2.5rem; border-radius:4px; margin-top:2.5rem;
+}
+.challenge-callout .cc-label { font-family:var(--mono); font-size:.62rem; letter-spacing:.14em; text-transform:uppercase; color:var(--accent); margin-bottom:.85rem; }
+.challenge-callout p { font-size:1rem; color:var(--fg2); line-height:1.75; }
+
+/* ═══════════════════════════════════════
+   ROLE  [SECTION: CS-ROLE]
+═══════════════════════════════════════ */
+#cs-role { background:var(--bg); }
+
+.resp-grid { display:grid; grid-template-columns:1fr 1fr; gap:.35rem; margin-top:2rem; }
+.resp-item {
+  display:flex; align-items:center; gap:.85rem;
+  padding:.85rem 1rem; border-bottom:1px solid var(--border);
+  font-size:.92rem; color:var(--fg2); transition:color .25s;
+}
+.resp-item:hover { color:var(--fg); }
+.resp-num { font-family:var(--mono); font-size:.6rem; color:var(--accent); letter-spacing:.1em; min-width:22px; }
+
+/* ═══════════════════════════════════════
+   APPROACH  [SECTION: CS-APPROACH]
+═══════════════════════════════════════ */
+#cs-approach { background:#1c1a17; padding:8rem 4rem; }
+#cs-approach .cs-h2 { color:#f0ebe3; }
+#cs-approach .cs-body { color:rgba(240,235,227,.5); }
+#cs-approach .mono-label { color:var(--accent); }
+#cs-approach .mono-label::before { background:var(--accent); }
+
+.approach-steps {
+  display:grid; grid-template-columns:repeat(4,1fr);
+  gap:1px; background:rgba(240,235,227,.06);
+  margin:3.5rem 0;
+}
+.approach-step {
+  background:#1c1a17; padding:2rem 1.75rem;
+  transition:background .3s;
+}
+.approach-step:hover { background:rgba(240,235,227,.04); }
+.step-num { font-family:var(--mono); font-size:.6rem; color:var(--accent); letter-spacing:.1em; margin-bottom:.75rem; }
+.step-title { font-family:var(--serif); font-size:1.1rem; font-weight:700; color:#f0ebe3; margin-bottom:.6rem; }
+.step-desc { font-size:.85rem; color:rgba(240,235,227,.4); line-height:1.65; }
+
+.key-insight {
+  border:1px solid rgba(212,77,31,.2); border-radius:4px;
+  padding:2.5rem 3rem; margin-top:3.5rem;
+  background:rgba(212,77,31,.04);
+}
+.ki-label { font-family:var(--mono); font-size:.62rem; letter-spacing:.14em; text-transform:uppercase; color:var(--accent); margin-bottom:1rem; }
+.ki-quote { font-family:var(--serif); font-style:italic; font-size:clamp(1.3rem,2.2vw,1.8rem); color:rgba(240,235,227,.8); line-height:1.4; }
+
+/* ═══════════════════════════════════════
+   SOLUTION  [SECTION: CS-SOLUTION]
+═══════════════════════════════════════ */
+#cs-solution { background:var(--bg); }
+
+/* Workflow grid */
+.wf-grid {
+  display:grid; grid-template-columns:repeat(4,1fr);
+  gap:1px; background:var(--border); margin:3rem 0;
+}
+.wf-item {
+  background:var(--bg); padding:1.75rem 1.5rem;
+  position:relative; overflow:hidden;
+  transition:background .3s; cursor:default;
+}
+.wf-item::after { content:''; position:absolute; left:0; bottom:0; right:0; height:2px; background:var(--accent); transform:scaleX(0); transform-origin:left; transition:transform .35s var(--ease-out); }
+.wf-item:hover { background:var(--bg2); }
+.wf-item:hover::after { transform:scaleX(1); }
+.wf-num { font-family:var(--mono); font-size:.6rem; color:var(--accent); letter-spacing:.1em; margin-bottom:.7rem; }
+.wf-name { font-family:var(--serif); font-size:1rem; font-weight:700; margin-bottom:.35rem; line-height:1.2; }
+.wf-desc { font-size:.8rem; color:var(--fg3); line-height:1.5; }
+
+/* Before / After row */
+.ba-row { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-bottom:3rem; }
+.ba-label {
+  font-family:var(--mono); font-size:.62rem; letter-spacing:.12em;
+  text-transform:uppercase; display:inline-block;
+  padding:.28rem .75rem; border-radius:3px; margin-bottom:.85rem;
+}
+.ba-before { background:var(--bg3); color:var(--fg3); }
+.ba-after  { background:var(--accentbg); color:var(--accent); }
+.ba-desc { font-size:.9rem; color:var(--fg2); line-height:1.65; margin-top:.75rem; }
+
+/* Design system preview cards */
+.ds-cards { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin-top:2.5rem; }
+.ds-card { background:var(--bg2); border:1px solid var(--border); border-radius:4px; padding:1.75rem; }
+.ds-card-label { font-family:var(--mono); font-size:.6rem; letter-spacing:.12em; text-transform:uppercase; color:var(--accent); margin-bottom:1.25rem; }
+.ds-colors { display:flex; gap:.4rem; flex-wrap:wrap; }
+.ds-swatch { width:32px; height:32px; border-radius:3px; transition:transform .2s; }
+.ds-swatch:hover { transform:scale(1.1); }
+.ds-comp-list { display:flex; flex-direction:column; gap:.4rem; }
+.ds-comp-item { font-size:.85rem; color:var(--fg2); padding:.3rem 0; border-bottom:1px solid var(--border); display:flex; align-items:center; gap:.5rem; }
+.ds-comp-item::before { content:''; width:5px; height:5px; border-radius:50%; background:var(--accent); flex-shrink:0; }
+
+/* ═══════════════════════════════════════
+   OUTCOME  [SECTION: CS-OUTCOME]
+═══════════════════════════════════════ */
+#cs-outcome { background:var(--bg2); }
+
+.metrics-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--border); margin:3rem 0; }
+.metric-card {
+  background:var(--bg2); padding:2.25rem 2rem;
+  transition:background .3s; cursor:default;
+}
+.metric-card:hover { background:var(--bg); }
+.metric-icon { font-size:1.4rem; margin-bottom:1rem; opacity:.8; }
+.metric-title { font-family:var(--serif); font-size:1.05rem; font-weight:700; margin-bottom:.5rem; line-height:1.25; }
+.metric-desc { font-size:.85rem; color:var(--fg2); line-height:1.65; }
+
+.skills-wrap { margin-top:3.5rem; }
+.skills-wrap-label { font-family:var(--mono); font-size:.62rem; letter-spacing:.14em; text-transform:uppercase; color:var(--fg3); margin-bottom:1rem; }
+.skills-pills { display:flex; flex-wrap:wrap; gap:.45rem; }
+.skill-pill {
+  font-size:.85rem; color:var(--fg);
+  background:var(--bg); border:1px solid var(--border);
+  padding:.4rem 1rem; border-radius:100px; transition:all .25s;
+}
+.skill-pill:hover { background:var(--accentbg); border-color:rgba(212,77,31,.3); color:var(--accent); }
+
+/* ═══════════════════════════════════════
+   NEXT PROJECT  [SECTION: CS-NEXT]
+═══════════════════════════════════════ */
+#cs-next {
+  background:#1c1a17; padding:8rem 4rem;
+  position:relative; overflow:hidden;
+  display:flex; align-items:center; justify-content:center;
+  min-height:40vh; text-align:center;
+}
+.next-bg-text {
+  position:absolute; inset:0;
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--cond); font-size:clamp(6rem,18vw,20rem);
+  color:rgba(240,235,227,.03); letter-spacing:.02em;
+  pointer-events:none; user-select:none; white-space:nowrap;
+}
+.next-inner { position:relative; z-index:1; }
+.next-label { font-family:var(--mono); font-size:.62rem; letter-spacing:.14em; text-transform:uppercase; color:rgba(240,235,227,.3); margin-bottom:1.25rem; }
+.next-link { text-decoration:none; display:inline-flex; flex-direction:column; align-items:center; gap:1.5rem; }
+.next-title {
+  font-family:var(--cond); font-size:clamp(3rem,8vw,8rem);
+  line-height:.9; letter-spacing:.02em; color:#f0ebe3;
+  transition:color .3s;
+}
+.next-link:hover .next-title { color:var(--accent); }
+.next-cta {
+  display:inline-flex; align-items:center; gap:.6rem;
+  font-family:var(--mono); font-size:.72rem; letter-spacing:.1em; text-transform:uppercase;
+  color:#f0ebe3; border:1px solid rgba(240,235,227,.2);
+  padding:.8rem 1.8rem; border-radius:3px;
+  transition:all .3s var(--ease-out);
+}
+.next-link:hover .next-cta { background:var(--accent); border-color:var(--accent); }
+
+/* ═══════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════ */
+footer { border-top:1px solid var(--border); padding:2rem 4rem; display:flex; align-items:center; justify-content:space-between; }
+footer p { font-family:var(--mono); font-size:0.68rem; color:var(--fg3); letter-spacing:0.07em; }
+footer span { color:var(--accent); }
+
+/* ═══════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════ */
+@media(max-width:1024px){
+  .cs-two-col,.cs-two-col-wide { grid-template-columns:1fr; gap:3.5rem; }
+  .approach-steps { grid-template-columns:1fr 1fr; }
+  .wf-grid { grid-template-columns:1fr 1fr; }
+  .metrics-grid { grid-template-columns:1fr 1fr; }
+  .ba-row { grid-template-columns:1fr; }
+  .cs-hero-meta { grid-template-columns:1fr 1fr; }
+  .cs-img-pair,.cs-img-trio { grid-template-columns:1fr; }
+  .ds-cards { grid-template-columns:1fr; }
+}
+@media(max-width:768px){
+  body { cursor:auto; }
+  .cursor,.cursor-ring { display:none; }
+  nav { padding:1.25rem 1.5rem; }
+  .nav-links { display:none; }
+  .cs-section { padding:5rem 1.5rem; }
+  #cs-approach { padding:5rem 1.5rem; }
+  #cs-next { padding:5rem 1.5rem; }
+  .cs-hero-content { padding:0 1.5rem 3rem; }
+  .cs-hero-meta { grid-template-columns:1fr 1fr; }
+  .cs-hero-title { font-size:clamp(3.5rem,14vw,6rem); }
+  .approach-steps { grid-template-columns:1fr; }
+  .wf-grid { grid-template-columns:1fr 1fr; }
+  .metrics-grid { grid-template-columns:1fr; }
+  .resp-grid { grid-template-columns:1fr; }
+  .cs-divider { margin:0 1.5rem; }
+  footer { padding:1.5rem; flex-direction:column; gap:.75rem; text-align:center; }
+}
+</style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- PROGRESS BAR -->
+<div id="progress-bar"></div>
+
+<!-- ═══ NAV ═══ -->
+<nav id="nav">
+  <a href="index.html" class="nav-back">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 3L5 8l5 5"/></svg>
+    Back
+  </a>
+  <span class="nav-proj-title">Florida Orthopedic Hospital</span>
+  <div class="nav-right">
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+      <div class="theme-toggle-knob" id="themeKnob">
+        <span class="theme-toggle-icon" id="themeIcon">☀️</span>
+      </div>
+    </button>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════════
+     CS-HERO  [SECTION: CS-HERO]
+═══════════════════════════════════════════════ -->
+<section id="cs-hero">
+  <div class="cs-hero-img"></div>
+  <div class="cs-hero-grid"></div>
+  <div class="cs-hero-overlay"></div>
+  <div class="cs-hero-content">
+    <div class="cs-hero-eyebrow">
+      <div class="cs-hero-eyebrow-line"></div>
+      <span>Case Study · Healthcare · 2024</span>
+    </div>
+    <h1 class="cs-hero-title">
+      FLORIDA<br>ORTHOPEDIC
+      <span class="italic-sub">Redesigning a complex hospital platform.</span>
+    </h1>
+    <div class="cs-hero-meta">
+      <div class="meta-item">
+        <div class="meta-label">Duration</div>
+        <div class="meta-value">5 Months</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Platform</div>
+        <div class="meta-value">Desktop + Mobile</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Industry</div>
+        <div class="meta-value">Healthcare</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Role</div>
+        <div class="meta-value">Associate UI/UX Designer</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     01 OVERVIEW  [SECTION: CS-OVERVIEW]
+═══════════════════════════════════════════════ -->
+<section id="cs-overview" class="cs-section">
+  <div class="cs-section-inner">
+    <div class="cs-two-col-wide">
+
+      <div>
+        <div class="mono-label reveal">01 — Overview</div>
+        <h2 class="cs-h2 reveal rd1">A platform<br>built for<br><em>everyone.</em></h2>
+        <p class="cs-body reveal rd2">Florida Orthopedic Hospital is a healthcare management platform used by receptionists, doctors, nurses, administrators, and finance teams to manage patient care, appointments, treatment records, billing, and hospital operations.</p>
+        <p class="cs-body reveal rd3">The project focused on modernizing a legacy system that had become difficult to navigate after years of incremental updates, while introducing new workflows to support evolving operational needs.</p>
+      </div>
+
+      <div class="reveal rd2">
+        <!-- Dashboard full width -->
+        <div class="cs-img cs-img-16-9" style="margin-bottom:1rem;">
+          <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=900&q=80" alt="Dashboard mockup">
+          <div class="cs-img-badge">Dashboard · Desktop</div>
+        </div>
+        <!-- Mobile + snapshot side by side -->
+        <div class="cs-img-pair">
+          <div class="cs-img cs-img-4-3">
+            <img src="https://images.unsplash.com/photo-1511174511562-5f7f18b874f8?w=500&q=80" alt="Doctor mobile app">
+            <div class="cs-img-badge">Doctor · Mobile</div>
+          </div>
+          <div class="cs-img cs-img-4-3">
+            <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=500&q=80" alt="Project snapshot">
+            <div class="cs-img-badge">Patient Flow</div>
+          </div>
+        </div>
+        <p class="cs-img-caption">Dashboard mockup · Mobile app · Patient flow snapshot</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="cs-divider"></div>
+
+<!-- ═══════════════════════════════════════════════
+     02 PROBLEM  [SECTION: CS-PROBLEM]
+═══════════════════════════════════════════════ -->
+<section id="cs-problem" class="cs-section">
+  <div class="cs-section-inner">
+    <div class="cs-two-col">
+
+      <div>
+        <div class="mono-label reveal">02 — Problem</div>
+        <h2 class="cs-h2 reveal rd1">Years of<br>patches,<br><em>no vision.</em></h2>
+        <p class="cs-body reveal rd2">The existing platform had accumulated years of feature additions without a cohesive user experience strategy.</p>
+
+        <div class="pain-list">
+          <div class="pain-item reveal rd2">
+            <div class="pain-icon">⚡</div>
+            <div class="pain-text"><strong>Information overload</strong><span>Multiple roles sharing the same cluttered interface with no contextual filtering.</span></div>
+          </div>
+          <div class="pain-item reveal rd3">
+            <div class="pain-icon">🔁</div>
+            <div class="pain-text"><strong>Redundant workflows</strong><span>Duplicate actions and multiple paths leading to the same outcome.</span></div>
+          </div>
+          <div class="pain-item reveal rd3">
+            <div class="pain-icon">🔗</div>
+            <div class="pain-text"><strong>Communication gaps</strong><span>Departments operating in silos with no shared visibility across teams.</span></div>
+          </div>
+          <div class="pain-item reveal rd4">
+            <div class="pain-icon">🐢</div>
+            <div class="pain-text"><strong>Slow onboarding</strong><span>New users required extensive training to navigate even basic tasks.</span></div>
+          </div>
+        </div>
+
+        <div class="challenge-callout reveal rd4">
+          <div class="cc-label">⚠ Critical Challenge</div>
+          <p>The primary stakeholder with deep knowledge of the system passed away shortly after kickoff — leaving much of the platform completely undocumented. Reconstructing the system became as critical as redesigning it.</p>
+        </div>
+      </div>
+
+      <div class="reveal rd2">
+        <div class="cs-img cs-img-3-2" style="margin-bottom:1rem;">
+          <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&q=80" alt="Existing interface">
+          <div class="cs-img-badge">Before · Existing Interface</div>
+        </div>
+        <div class="cs-img cs-img-3-2">
+          <img src="https://images.unsplash.com/photo-1542744094-3a31f272c490?w=800&q=80" alt="Pain point annotations">
+          <div class="cs-img-badge">User Role Complexity Map</div>
+        </div>
+        <p class="cs-img-caption">Before state · Pain point annotations · Role complexity map</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="cs-divider"></div>
+
+<!-- ═══════════════════════════════════════════════
+     03 ROLE  [SECTION: CS-ROLE]
+═══════════════════════════════════════════════ -->
+<section id="cs-role" class="cs-section">
+  <div class="cs-section-inner">
+    <div class="cs-two-col">
+
+      <div>
+        <div class="mono-label reveal">03 — Role</div>
+        <h2 class="cs-h2 reveal rd1">Led UX<br>end to<br><em>end.</em></h2>
+        <p class="cs-body reveal rd2">I led the UX effort from discovery through delivery, working closely with stakeholders and development teams to understand the platform, define workflows, and redesign the user experience.</p>
+
+        <div class="resp-grid reveal rd3">
+          <div class="resp-item"><span class="resp-num">01</span>Stakeholder Interviews</div>
+          <div class="resp-item"><span class="resp-num">02</span>User Interviews</div>
+          <div class="resp-item"><span class="resp-num">03</span>Workflow Analysis</div>
+          <div class="resp-item"><span class="resp-num">04</span>Information Architecture</div>
+          <div class="resp-item"><span class="resp-num">05</span>User Flows</div>
+          <div class="resp-item"><span class="resp-num">06</span>Wireframing</div>
+          <div class="resp-item"><span class="resp-num">07</span>High-Fidelity UI Design</div>
+          <div class="resp-item"><span class="resp-num">08</span>Design System Creation</div>
+          <div class="resp-item"><span class="resp-num">09</span>Interactive Prototyping</div>
+          <div class="resp-item"><span class="resp-num">10</span>Developer Handoff</div>
+        </div>
+      </div>
+
+      <div class="reveal rd2">
+        <div class="cs-img cs-img-4-3" style="margin-bottom:1rem;">
+          <img src="https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=800&q=80" alt="Research artifacts">
+          <div class="cs-img-badge">Research · Discovery Phase</div>
+        </div>
+        <div class="cs-img-pair">
+          <div class="cs-img cs-img-1-1">
+            <img src="https://images.unsplash.com/photo-1512486130939-2c4f79935e4f?w=500&q=80" alt="Wireframes">
+            <div class="cs-img-badge">Wireframes</div>
+          </div>
+          <div class="cs-img cs-img-1-1">
+            <img src="https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?w=500&q=80" alt="Process">
+            <div class="cs-img-badge">Design Process</div>
+          </div>
+        </div>
+        <p class="cs-img-caption">Research artifacts · Wireframes · Process snapshots</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     04 APPROACH  [SECTION: CS-APPROACH]
+═══════════════════════════════════════════════ -->
+<section id="cs-approach">
+  <div class="cs-section-inner" style="max-width:1200px;margin:0 auto;padding:8rem 0;">
+
+    <div class="cs-two-col" style="margin-bottom:3.5rem;">
+      <div>
+        <div class="mono-label reveal">04 — Approach</div>
+        <h2 class="cs-h2 reveal rd1">Reconstruct<br>first. <em>Then</em><br>redesign.</h2>
+      </div>
+      <div>
+        <p class="cs-body reveal rd2" style="margin-top:6rem;">With limited documentation available, the first priority was understanding how the system actually worked. I conducted stakeholder interviews, analyzed existing workflows, reviewed competitor products, and performed a complete audit of the platform.</p>
+        <p class="cs-body reveal rd3">To establish clarity, I mapped every major workflow and dependency across departments. This documentation became the foundation for design decisions and development planning throughout the project.</p>
+      </div>
+    </div>
+
+    <!-- HERO image for approach -->
+    <div class="cs-img cs-img-wide reveal" style="border-radius:6px;margin-bottom:3rem;">
+      <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1400&q=80" alt="Workflow reconstruction diagram">
+      <div class="cs-img-badge">Workflow Reconstruction · System Map</div>
+    </div>
+
+    <div class="approach-steps">
+      <div class="approach-step reveal">
+        <div class="step-num">01</div>
+        <div class="step-title">Stakeholder Interviews</div>
+        <div class="step-desc">Mapped every workflow using surviving team members, usage logs, and pattern observation.</div>
+      </div>
+      <div class="approach-step reveal rd1">
+        <div class="step-num">02</div>
+        <div class="step-title">Workflow Reconstruction</div>
+        <div class="step-desc">Rebuilt undocumented system architecture into a clear dependency map — foundation for all design decisions.</div>
+      </div>
+      <div class="approach-step reveal rd2">
+        <div class="step-num">03</div>
+        <div class="step-title">Competitive Audit</div>
+        <div class="step-desc">Reviewed healthcare platforms and analogous systems to identify patterns that reduce cognitive load.</div>
+      </div>
+      <div class="approach-step reveal rd3">
+        <div class="step-num">04</div>
+        <div class="step-title">Architecture & Flows</div>
+        <div class="step-desc">Defined information architecture and user flows for all five core roles before any UI work began.</div>
+      </div>
+    </div>
+
+    <div class="cs-img-pair reveal" style="margin-top:3rem;">
+      <div class="cs-img cs-img-3-2">
+        <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&q=80" alt="User journey maps">
+        <div class="cs-img-badge">User Journey Maps</div>
+      </div>
+      <div class="cs-img cs-img-3-2">
+        <img src="https://images.unsplash.com/photo-1606868306217-dbf5046868d2?w=800&q=80" alt="Information architecture">
+        <div class="cs-img-badge">Information Architecture</div>
+      </div>
+    </div>
+
+    <div class="key-insight reveal" style="margin-top:3.5rem;">
+      <div class="ki-label">Key Insight</div>
+      <p class="ki-quote">"Reconstructing the system was as important as redesigning it."</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     05 SOLUTION  [SECTION: CS-SOLUTION]
+═══════════════════════════════════════════════ -->
+<section id="cs-solution" class="cs-section">
+  <div class="cs-section-inner">
+
+    <div class="cs-two-col" style="margin-bottom:5rem;">
+      <div>
+        <div class="mono-label reveal">05 — Solution</div>
+        <h2 class="cs-h2 reveal rd1">Role-based<br>experiences<br><em>at scale.</em></h2>
+      </div>
+      <div class="reveal rd2" style="padding-top:1rem;">
+        <p class="cs-body">The platform was redesigned around role-based experiences, ensuring users could focus on the information and actions relevant to their responsibilities. The new design simplified navigation, reduced unnecessary actions, and improved visibility across departments.</p>
+      </div>
+    </div>
+
+    <!-- Core workflows -->
+    <div class="mono-label reveal"><span style="margin-left:26px;">Core workflows redesigned</span></div>
+    <div class="wf-grid reveal">
+      <div class="wf-item"><div class="wf-num">01</div><div class="wf-name">Patient Registration</div><div class="wf-desc">Simplified multi-step intake with smart field validation.</div></div>
+      <div class="wf-item"><div class="wf-num">02</div><div class="wf-name">Appointment Management</div><div class="wf-desc">Calendar-first scheduling with conflict detection.</div></div>
+      <div class="wf-item"><div class="wf-num">03</div><div class="wf-name">Doctor Dashboard</div><div class="wf-desc">Role-focused view with daily patient list and quick actions.</div></div>
+      <div class="wf-item"><div class="wf-num">04</div><div class="wf-name">Treatment Records</div><div class="wf-desc">Structured record-keeping with version history.</div></div>
+      <div class="wf-item"><div class="wf-num">05</div><div class="wf-name">Medication Management</div><div class="wf-desc">Prescription tracking with interaction warnings.</div></div>
+      <div class="wf-item"><div class="wf-num">06</div><div class="wf-name">Billing & Reporting</div><div class="wf-desc">Streamlined invoicing tied directly to treatment records.</div></div>
+      <div class="wf-item"><div class="wf-num">07</div><div class="wf-name">Administrative Ops</div><div class="wf-desc">Staff management, room assignment, and audit tools.</div></div>
+      <div class="wf-item"><div class="wf-num">08</div><div class="wf-name">Doctor Mobile App</div><div class="wf-desc">Remote review and approval for on-the-go workflows.</div></div>
+    </div>
+
+    <!-- Before / After: Registration -->
+    <div class="mono-label reveal" style="margin-top:4rem;"><span style="margin-left:26px;">Before → After</span></div>
+    <div class="ba-row reveal">
+      <div>
+        <span class="ba-label ba-before">Before · Registration</span>
+        <div class="cs-img cs-img-16-9">
+          <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&q=80" alt="Before registration">
+        </div>
+        <p class="ba-desc">7-screen multi-form flow with inconsistent field labeling and no progress indicator. Average completion time: 14 minutes.</p>
+      </div>
+      <div>
+        <span class="ba-label ba-after">After · Registration</span>
+        <div class="cs-img cs-img-16-9">
+          <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80" alt="After registration">
+        </div>
+        <p class="ba-desc">Consolidated 3-step wizard with inline validation, smart defaults, and visible progress. Target: under 5 minutes.</p>
+      </div>
+    </div>
+
+    <!-- Before / After: Doctor -->
+    <div class="ba-row reveal">
+      <div>
+        <span class="ba-label ba-before">Before · Doctor Dashboard</span>
+        <div class="cs-img cs-img-16-9">
+          <img src="https://images.unsplash.com/photo-1542744094-3a31f272c490?w=800&q=80" alt="Before doctor">
+        </div>
+        <p class="ba-desc">Generic interface showing all system data regardless of role. Doctors navigated 6+ sections to complete a patient review.</p>
+      </div>
+      <div>
+        <span class="ba-label ba-after">After · Doctor Dashboard</span>
+        <div class="cs-img cs-img-16-9">
+          <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80" alt="After doctor">
+        </div>
+        <p class="ba-desc">Role-filtered view surfacing today's patients, pending approvals, and quick-action shortcuts. Full review in one screen.</p>
+      </div>
+    </div>
+
+    <!-- Design system -->
+    <div class="mono-label reveal" style="margin-top:4rem;"><span style="margin-left:26px;">Design System</span></div>
+    <div class="cs-img cs-img-wide reveal" style="margin-bottom:2rem;">
+      <img src="https://images.unsplash.com/photo-1558655146-d09347e92766?w=1200&q=80" alt="Design system components">
+      <div class="cs-img-badge">Component Library · Design Tokens</div>
+    </div>
+    <div class="ds-cards reveal">
+      <div class="ds-card">
+        <div class="ds-card-label">Colour Tokens</div>
+        <div class="ds-colors">
+          <div class="ds-swatch" style="background:#0057b8;" title="Primary"></div>
+          <div class="ds-swatch" style="background:#00a878;" title="Success"></div>
+          <div class="ds-swatch" style="background:#e85d04;" title="Warning"></div>
+          <div class="ds-swatch" style="background:#d00000;" title="Error"></div>
+          <div class="ds-swatch" style="background:#f8f9fa;border:1px solid #ddd;" title="Surface"></div>
+          <div class="ds-swatch" style="background:#212529;" title="Ink"></div>
+        </div>
+      </div>
+      <div class="ds-card">
+        <div class="ds-card-label">Typography Scale</div>
+        <div style="display:flex;flex-direction:column;gap:.5rem;">
+          <div style="font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;line-height:1;color:var(--fg);">Display</div>
+          <div style="font-size:1rem;font-weight:500;line-height:1.2;color:var(--fg);">Heading</div>
+          <div style="font-size:.85rem;font-weight:300;color:var(--fg2);line-height:1.5;">Body — clear and readable at all sizes across all user roles in the system.</div>
+          <div style="font-family:'DM Mono',monospace;font-size:.72rem;color:var(--accent);letter-spacing:.1em;">LABEL / META</div>
+        </div>
+      </div>
+      <div class="ds-card">
+        <div class="ds-card-label">Components</div>
+        <div class="ds-comp-list">
+          <div class="ds-comp-item">Form fields & validation states</div>
+          <div class="ds-comp-item">Status indicators & badges</div>
+          <div class="ds-comp-item">Data tables & filters</div>
+          <div class="ds-comp-item">Modal dialogs & drawers</div>
+          <div class="ds-comp-item">Navigation & sidebar patterns</div>
+          <div class="ds-comp-item">Calendar & scheduling UI</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="cs-divider"></div>
+
+<!-- ═══════════════════════════════════════════════
+     06 OUTCOME  [SECTION: CS-OUTCOME]
+═══════════════════════════════════════════════ -->
+<section id="cs-outcome" class="cs-section">
+  <div class="cs-section-inner">
+
+    <div class="cs-two-col" style="margin-bottom:4rem;">
+      <div>
+        <div class="mono-label reveal">06 — Outcome</div>
+        <h2 class="cs-h2 reveal rd1">Simpler ops.<br>Faster care.<br><em>Real impact.</em></h2>
+      </div>
+      <div class="reveal rd2" style="padding-top:1rem;">
+        <p class="cs-body">The redesign streamlined hospital operations by simplifying complex workflows and improving accessibility for different user groups. A documented workflow framework became the single source of truth for all future development.</p>
+      </div>
+    </div>
+
+    <div class="metrics-grid">
+      <div class="metric-card reveal">
+        <div class="metric-icon">📋</div>
+        <div class="metric-title">Simplified patient onboarding</div>
+        <div class="metric-desc">Registration reduced from a 7-screen process to a 3-step wizard, cutting completion time significantly.</div>
+      </div>
+      <div class="metric-card reveal rd1">
+        <div class="metric-icon">📱</div>
+        <div class="metric-title">Remote doctor approvals</div>
+        <div class="metric-desc">Doctors can now review and approve patient information remotely via mobile, removing care bottlenecks.</div>
+      </div>
+      <div class="metric-card reveal rd2">
+        <div class="metric-icon">👁</div>
+        <div class="metric-title">Cross-department visibility</div>
+        <div class="metric-desc">Shared workflow visibility replaced departmental silos, improving coordination and reducing gaps.</div>
+      </div>
+      <div class="metric-card reveal rd3">
+        <div class="metric-icon">🔀</div>
+        <div class="metric-title">Reduced navigation complexity</div>
+        <div class="metric-desc">Redundant actions and duplicate paths eliminated through role-based experience architecture.</div>
+      </div>
+      <div class="metric-card reveal rd4">
+        <div class="metric-icon">📖</div>
+        <div class="metric-title">System documentation created</div>
+        <div class="metric-desc">A workflow framework built from scratch became the source of truth for all future development planning.</div>
+      </div>
+      <div class="metric-card reveal rd5">
+        <div class="metric-icon">⚙️</div>
+        <div class="metric-title">Design system shipped</div>
+        <div class="metric-desc">Complete component library with tokens, patterns, and usage guidelines handed off for ongoing development.</div>
+      </div>
+    </div>
+
+    <div class="skills-wrap reveal">
+      <div class="skills-wrap-label">Skills demonstrated</div>
+      <div class="skills-pills">
+        <span class="skill-pill">Complex Problem Solving</span>
+        <span class="skill-pill">Product Thinking</span>
+        <span class="skill-pill">Healthcare UX</span>
+        <span class="skill-pill">Workflow Architecture</span>
+        <span class="skill-pill">Information Architecture</span>
+        <span class="skill-pill">Cross-Functional Collaboration</span>
+        <span class="skill-pill">Enterprise System Design</span>
+        <span class="skill-pill">Design Systems</span>
+        <span class="skill-pill">Interactive Prototyping</span>
+        <span class="skill-pill">Developer Handoff</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     NEXT PROJECT  [SECTION: CS-NEXT]
+═══════════════════════════════════════════════ -->
+<section id="cs-next">
+  <div class="next-bg-text">NEXT</div>
+  <div class="next-inner">
+    <div class="next-label">Next Project</div>
+    <a class="next-link" href="#">
+      <h2 class="next-title">SAAS<br>DASHBOARD</h2>
+      <span class="next-cta">View Case Study →</span>
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 <span>Selva Vignesh</span> — Senior UX Designer</p>
+  <p>Florida Orthopedic Hospital · Case Study</p>
+</footer>
+
+<script>
+'use strict';
+
+// ── CURSOR
+const cursor     = document.getElementById('cursor');
+const cursorRing = document.getElementById('cursorRing');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove', e => {
+  mx=e.clientX; my=e.clientY;
+  cursor.style.left=mx+'px'; cursor.style.top=my+'px';
+});
+(function animRing(){
+  rx+=(mx-rx)*.1; ry+=(my-ry)*.1;
+  cursorRing.style.left=rx+'px'; cursorRing.style.top=ry+'px';
+  requestAnimationFrame(animRing);
+})();
+document.querySelectorAll('a,button,.wf-item,.metric-card,.pain-item,.approach-step,.skill-pill,.ds-swatch').forEach(el => {
+  el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+  el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+});
+
+// ── PROGRESS BAR
+const pb = document.getElementById('progress-bar');
+window.addEventListener('scroll', () => {
+  const h = document.documentElement.scrollHeight - window.innerHeight;
+  pb.style.width = (window.scrollY / h * 100) + '%';
+});
+
+// ── NAV SCROLL
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 80);
+});
+
+// ── THEME TOGGLE
+const html      = document.documentElement;
+const toggleBtn = document.getElementById('themeToggle');
+const themeIcon = document.getElementById('themeIcon');
+const saved     = localStorage.getItem('sv-theme');
+if (saved) {
+  html.setAttribute('data-theme', saved);
+  themeIcon.textContent = saved === 'dark' ? '☀️' : '🌙';
+}
+toggleBtn.addEventListener('click', () => {
+  const isDark = html.getAttribute('data-theme') === 'dark';
+  const next   = isDark ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  themeIcon.textContent = isDark ? '☀️' : '🌙';
+  localStorage.setItem('sv-theme', next);
+});
+
+// ── SCROLL REVEAL
+const revObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold:0.1, rootMargin:'0px 0px -40px 0px' });
+document.querySelectorAll('.reveal').forEach(el => revObs.observe(el));
+</script>
+</body>
+</html>
