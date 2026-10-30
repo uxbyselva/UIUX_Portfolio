@@ -356,11 +356,16 @@ button { font-family: inherit; border: none; background: none; cursor: none; }
   line-height: 1.04;
   font-weight: 900;
   letter-spacing: -0.02em;
-  overflow: hidden;
 }
 .hero h1 .line {
   display: block;
+  /* Each line masks its own reveal, so the mask bottom sits on the line box.
+     At line-height 1.04 that edge falls above the descenders and shears the
+     tails off g, p and y. Drop the mask below them, then pull the next line
+     back up by the same amount so the spacing is unchanged. */
   overflow: hidden;
+  padding-bottom: 0.2em;
+  margin-bottom: -0.2em;
 }
 .hero h1 .line span {
   display: inline-block;
