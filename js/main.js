@@ -91,6 +91,54 @@ function initSite() {
   }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
   revealEls.forEach(el => io.observe(el));
 
+  /* ---------- before / after comparison slider ---------- */
+  document.querySelectorAll('[data-compare]').forEach(slider => {
+    const knob = slider.querySelector('.compare-knob');
+    let dragging = false;
+
+    function setPos(pct) {
+      const clamped = Math.max(0, Math.min(100, pct));
+      slider.style.setProperty('--pos', clamped + '%');
+      if (knob) knob.setAttribute('aria-valuenow', Math.round(clamped));
+    }
+
+    function posFromEvent(e) {
+      const r = slider.getBoundingClientRect();
+      setPos(((e.clientX - r.left) / r.width) * 100);
+    }
+
+    slider.addEventListener('pointerdown', (e) => {
+      dragging = true;
+      posFromEvent(e);
+      // Capture keeps the drag alive outside the element, but is non-essential:
+      // it throws on pointers the browser no longer tracks, so never let it
+      // abort the handler.
+      try { slider.setPointerCapture(e.pointerId); } catch (err) { /* no capture */ }
+    });
+    slider.addEventListener('pointermove', (e) => {
+      if (dragging) posFromEvent(e);
+    });
+    slider.addEventListener('pointerup', (e) => {
+      dragging = false;
+      try {
+        if (slider.hasPointerCapture(e.pointerId)) slider.releasePointerCapture(e.pointerId);
+      } catch (err) { /* already released */ }
+    });
+    slider.addEventListener('pointercancel', () => { dragging = false; });
+
+    if (knob) {
+      knob.addEventListener('keydown', (e) => {
+        const current = parseFloat(knob.getAttribute('aria-valuenow')) || 50;
+        const step = e.shiftKey ? 10 : 2;
+        if (e.key === 'ArrowLeft') { setPos(current - step); e.preventDefault(); }
+        else if (e.key === 'ArrowRight') { setPos(current + step); e.preventDefault(); }
+        else if (e.key === 'Home') { setPos(0); e.preventDefault(); }
+        else if (e.key === 'End') { setPos(100); e.preventDefault(); }
+      });
+      knob.addEventListener('click', (e) => e.preventDefault());
+    }
+  });
+
   /* ---------- stat count-up ---------- */
   const statEls = document.querySelectorAll('[data-count]');
   const statIO = new IntersectionObserver((entries) => {
