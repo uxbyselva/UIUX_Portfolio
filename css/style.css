@@ -13,6 +13,22 @@
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-soft: cubic-bezier(0.65, 0, 0.35, 1);
   --dur: 0.7s;
+
+  /* Type scale. Five steps, no sub-pixel gaps — every text role maps
+     to one of these so sizes can't quietly drift apart again. */
+  --text-lede: 16px;      /* intros and ledes */
+  --text-body: 14px;      /* body copy, list items, card descriptions */
+  --text-caption: 13px;   /* captions and secondary notes */
+  --text-label: 12px;     /* uppercase labels, tags, eyebrows */
+  --text-label-sm: 11px;  /* micro labels: meta keys, quote labels */
+
+  /* Spacing scale, 8px base. */
+  --space-block: 72px;    /* gap between major sections */
+  --space-media: 56px;    /* gap around full-width images */
+  --space-group: 40px;    /* gap between grouped elements */
+  --space-tight: 24px;    /* gap inside a group */
+
+  --measure: 720px;       /* reading width for body text */
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -198,12 +214,11 @@ button { font-family: inherit; border: none; background: none; cursor: none; }
 }
 .nav-links a {
   color: var(--white);
-  font-size: 13px;
+  font-size: var(--text-label);
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   position: relative;
-  padding-bottom: 4px;
 }
 .magnetic-btn {
   position: relative;
