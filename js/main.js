@@ -10,6 +10,26 @@ function initSite() {
     requestAnimationFrame(() => veil.classList.add('enter'));
   }
 
+  /* ---------- restore from back/forward navigation ----------
+     Going "back" serves the page from the bfcache, which restores the DOM
+     without re-running this script. Any full-screen overlay left mid-
+     transition therefore stays frozen over the page and blocks it. pageshow
+     fires on every display, including those restores, so reset them here.  */
+  window.addEventListener('pageshow', () => {
+    if (veil) {
+      veil.classList.remove('leave');
+      veil.classList.add('enter');
+    }
+    const menu = document.querySelector('.mobile-menu');
+    const toggle = document.querySelector('.menu-toggle');
+    if (menu) menu.classList.remove('open');
+    if (toggle) {
+      toggle.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    }
+    document.body.style.overflow = '';
+  });
+
   /* ---------- custom cursor ---------- */
   const dot = document.querySelector('.cursor-dot');
   const ring = document.querySelector('.cursor-ring');
